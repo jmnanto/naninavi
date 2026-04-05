@@ -12,7 +12,7 @@
       --blue-50: #eff6ff;
       --blue-100: #dbeafe;
       --blue-200: #bfdbfe;
-      --blue-700: #3b82f6;
+      --blue-700: #516989;
       --brand: #516989;
       --card: #ffffff;
       --border: #e2e8f0;
@@ -58,14 +58,14 @@
     }
     .btn:hover { border-color: var(--blue-200); color: var(--blue-700); }
     .hero {
-      padding: 36px 0 72px;
+      padding: 36px 0 92px;
       background:
-        radial-gradient(circle at top left, rgba(96,165,250,.22), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(37,99,235,.18), transparent 28%),
-        linear-gradient(180deg, #f8fbff 0%, #eef5ff 58%, #ffffff 100%);
+        radial-gradient(circle at top left, rgba(96,165,250,.18), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(81,105,137,.12), transparent 34%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4fb 72%, #f7f9fc 88%, #ffffff 100%);
     }
     .page-follow {
-      background: linear-gradient(180deg, rgba(238,245,255,.9) 0%, #ffffff 18%);
+      background: linear-gradient(180deg, #f7f9fc 0%, #fbfdff 10%, #ffffff 28%);
     }
     .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: start; }
     .badge {
@@ -445,7 +445,7 @@
                 <div class="eyebrow">Caregiver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Set up trusted places</h3>
                 <p>Caregivers can build an address book with familiar destinations and exact addresses.</p>
-                <div class="image-shell" style="margin-top:16px; max-width:70%;">
+                <div class="image-shell" style="margin-top:16px; max-width:55%; margin-left:auto; margin-right:auto;">
                   <img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot">
                 </div>
               </div>
@@ -453,7 +453,7 @@
                 <div class="eyebrow">Driver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Tap and go</h3>
                 <p>Drivers see large destination cards that are easy to recognize and simple to tap.</p>
-                <div class="image-shell" style="margin-top:16px; max-width:70%;">
+                <div class="image-shell" style="margin-top:16px; max-width:55%; margin-left:auto; margin-right:auto;">
                   <img src="${assets.driverScreenshot}" alt="Driver destination list screenshot">
                 </div>
               </div>
@@ -527,9 +527,9 @@
     function renderHow() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">How It Works</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Two roles. Two experiences. One simple system.</h1><p class="lead" style="margin-left:auto;margin-right:auto;">NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need.</p></div></section>
-        <section class="page-follow" style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers can build an address book with familiar destinations and exact addresses.</p><div class="image-shell" style="margin-top:16px; max-width:70%;">
+        <section class="page-follow" style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers can build an address book with familiar destinations and exact addresses.</p><div class="image-shell" style="margin-top:16px; max-width:55%; margin-left:auto; margin-right:auto;">
                   <img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot">
-                </div></div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large destination cards that are easy to recognize and simple to tap.</p><div class="image-shell" style="margin-top:16px; max-width:70%;">
+                </div></div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large destination cards that are easy to recognize and simple to tap.</p><div class="image-shell" style="margin-top:16px; max-width:55%; margin-left:auto; margin-right:auto;">
                   <img src="${assets.driverScreenshot}" alt="Driver destination list screenshot">
                 </div></div></div><div class="step-grid"><div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div><div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div><div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div></div></div></section>
       `;
@@ -634,6 +634,7 @@
   </script>
 </body>
 </html>
+
 
 
 
