@@ -33,13 +33,45 @@
     img { max-width: 100%; display: block; }
     .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
     .header {
-      position: sticky; top: 0; z-index: 20;
-      /* darker at top → lighter toward content for smoother blend */
-      background: linear-gradient(180deg, rgba(226,236,248,0.95) 0%, rgba(245,249,253,0.92) 100%);
+      position: sticky; top: 0; z-index: 30;
+      background: linear-gradient(180deg, rgba(210,223,239,0.96) 0%, rgba(236,243,250,0.94) 58%, rgba(244,248,252,0.92) 100%);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(219,234,254,0.6);
+      border-bottom: 1px solid rgba(219,234,254,0.45);
     }
     .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0;
+    }
+    .menu-btn {
+      display: none;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15,23,42,.04);
+      cursor: pointer;
+    }
+    .mobile-nav {
+      display: none;
+      padding: 0 0 14px;
+    }
+    .mobile-nav.open {
+      display: grid;
+      gap: 10px;
+    }
+    .mobile-nav a {
+      display: block;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-weight: 600;
+      color: #334155;
+    }
+    .mobile-store {
+      display: none;
+    }
       display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
@@ -138,6 +170,10 @@
     .image-collage { display: grid; gap: 18px; }
     .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
     .image-shell { overflow: hidden; border-radius: 32px; border: 1px solid var(--blue-100); background: white; box-shadow: var(--shadow); }
+    .image-shell.large-lifestyle {
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
     .image-shell img { width: 100%; height: 100%; object-fit: cover; }
     .icon-grid {
       display: grid;
@@ -171,22 +207,25 @@
       }
       .cards3 { grid-template-columns: 1fr; }
       .nav { display: none; }
-
-      /* fix overflow on mobile for icon section */
+      .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+      .mobile-store { display: inline-flex; }
+      .desktop-store { display: none; }
       .icon-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
       .image-text {
         overflow: hidden;
       }
-
       .container {
         width: calc(100% - 24px);
       }
-    }
-      .cards3 { grid-template-columns: 1fr; }
-      .nav { display: none; }
+      .brand-sub {
+        font-size: 0.64rem;
+        letter-spacing: .12em;
+      }
+      .header-inner {
+        gap: 12px;
+      }
     }
   </style>
 </head>
@@ -221,8 +260,19 @@
         <a href="#/resources">Resources</a>
         <a href="#/support">Support</a>
       </nav>
-      <a href="https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523">
+      <a class="desktop-store" href="https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523">
         <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" style="height:44px;">
+      </a>
+      <button class="menu-btn" id="menuToggle" aria-label="Toggle menu">Menu</button>
+    </div>
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="#/">Home</a>
+      <a href="#/how-it-works">How It Works</a>
+      <a href="#/for-caregivers">For Caregivers</a>
+      <a href="#/resources">Resources</a>
+      <a href="#/support">Support</a>
+      <a class="mobile-store" href="https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" style="height:48px;">
       </a>
     </div>
   </header>
@@ -531,7 +581,9 @@
 
         <section class="blue-section">
           <div class="container image-text" style="grid-template-columns:.95fr 1fr;">
-            <div class="image-shell" style="max-width:80%; margin:0 auto;"><img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together"></div>
+            <div class="image-shell large-lifestyle">
+              <img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together">
+            </div>
             <div>
               <div class="eyebrow">For the people who matter most</div>
               <h2>Familiar places made easier for seniors and their families.</h2>
@@ -676,11 +728,26 @@
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
 
-    window.addEventListener('hashchange', render);
+    window.addEventListener('hashchange', () => {
+      const mobileNav = document.getElementById('mobileNav');
+      if (mobileNav) mobileNav.classList.remove('open');
+      render();
+    });
+
+    document.addEventListener('click', (e) => {
+      const toggle = document.getElementById('menuToggle');
+      const mobileNav = document.getElementById('mobileNav');
+      if (!toggle || !mobileNav) return;
+      if (e.target === toggle) {
+        mobileNav.classList.toggle('open');
+      }
+    });
+
     render();
   </script>
 </body>
 </html>
+
 
 
 
