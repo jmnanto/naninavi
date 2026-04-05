@@ -378,12 +378,9 @@
         <section class="hero">
           <div class="container hero-grid">
             <div>
-              <div class="badge">
-                <span>📍</span>
-                <span>Two simple experiences: caregiver + driver</span>
-              </div>
               <h1>Safer, simpler driving for seniors with peace of mind for caregivers.</h1>
               <p class="lead">Caregivers set up familiar destinations once. Drivers tap large, simple buttons to go. Get notified when trips start and end with no constant checking required.</p>
+              <div style="margin-top:18px; color:#516989; font-weight:700; font-size:1rem;">Available for iPhone on the App Store</div>
               <div class="cta-row">
                 <a class="app-badge" href="${appStoreUrl}">
                   <span style="font-size:1.3rem"></span>
@@ -398,7 +395,11 @@
               </div>
             </div>
             <div class="hero-side">
-              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe; margin-top:20px;">
+              <div class="image-shell" style="min-height: 320px;">
+                <img src="${assets.lifestyleSonDad}" alt="Adult son standing with older father outdoors">
+              </div>
+
+              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe;">
                 <div style="font-size:1.35rem; font-weight:800;">Caregiver setup</div>
                 <p class="subtle" style="margin:8px 0 0;">Caregivers can preset familiar destinations such as:</p>
                 <ul style="margin:14px 0 0 18px; padding:0; color:#475569; line-height:1.7;">
@@ -410,32 +411,6 @@
                   ${cardDestination('Home', '123 Main St, Springville, UT 84663', assets.destinationHome)}
                   ${cardDestination('Doctor', '897 W Medical Way, Provo, UT 84604', assets.destinationDoctor)}
                   ${cardDestination('Church', '275 Church Way, Mapleton, UT 84664', assets.destinationChurch)}
-                </div>
-              </div>
-
-              <div class="card" style="background:linear-gradient(180deg,#f8fafc,#fff);">
-                <div style="font-size:1.35rem; font-weight:800;">Driver view and caregiver updates</div>
-                <p class="subtle" style="margin:8px 0 0;">Drivers tap one large button to start. Caregivers receive simple updates when the trip begins and ends.</p>
-                <div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div>
-                <div style="margin-top:18px; display:grid; gap:12px;">
-                  <div class="notif">
-                    <div class="notif-row">
-                      <div class="dest-iconbox" style="width:42px;height:42px"><img src="${assets.destinationHome}" alt="home icon"></div>
-                      <div>
-                        <div style="font-weight:800; font-size:1rem;">Trip Started</div>
-                        <div class="subtle">Grandpa Joe Joe has started a trip home.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="notif">
-                    <div class="notif-row">
-                      <div class="dest-iconbox" style="width:42px;height:42px"><img src="${assets.destinationHome}" alt="home icon"></div>
-                      <div>
-                        <div style="font-weight:800; font-size:1rem;">Arrived</div>
-                        <div class="subtle">Grandpa Joe Joe arrived home.</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -666,6 +641,7 @@
   </script>
 </body>
 </html>
+
 
 
 
