@@ -729,7 +729,34 @@
     function renderSupport() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">Support</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Need help with NaniNavi?</h1><p class="lead" style="margin-left:auto;margin-right:auto;">For product questions, support requests, or launch inquiries, reach out using the details below.</p></div></section>
-        <section class="page-follow" style="padding-top:0"><div class="container grid-4" style="grid-template-columns:repeat(3,1fr)"><div class="white-card"><h3>Contact</h3><p>${supportEmail}</p></div><div class="white-card"><h3>Response time</h3><p>Typically within 1 to 2 business days</p></div><div class="white-card"><h3>Help topics</h3><p>App setup, caregiver use, trip notifications, and launch questions</p></div></div></section>`;
+        <section class="page-follow" style="padding-top:0">
+          <div class="container" style="display:grid; gap:24px;">
+            <div class="grid-4" style="grid-template-columns:repeat(3,1fr)">
+              <div class="white-card"><h3>Contact</h3><p>${supportEmail}</p></div>
+              <div class="white-card"><h3>Response time</h3><p>Typically within 1 to 2 business days</p></div>
+              <div class="white-card"><h3>Help topics</h3><p>App setup, caregiver use, trip notifications, and launch questions</p></div>
+            </div>
+
+            <div class="white-card">
+              <div class="eyebrow">FAQs</div>
+              <h3 style="margin-top:10px; font-size:1.6rem;">Common questions</h3>
+              <div style="margin-top:18px; display:grid; gap:12px;">
+                ${[
+                  ['How does NaniNavi work?', 'A caregiver sets up common destinations. The driver taps a large button to start navigation. Caregivers receive simple updates when trips start and end.'],
+                  ['Do both people need the app?', 'Yes. The caregiver sets up destinations and the driver uses the simplified interface for navigation.'],
+                  ['Is this a tracking app?', 'No. NaniNavi is designed around simple trip awareness, not continuous tracking. Caregivers are notified when trips start and when the driver arrives.'],
+                  ['Can I customize destinations?', 'Yes. You can add and edit destinations based on the places your loved one visits most often.'],
+                  ['What if my parent is not tech-savvy?', 'The driver experience is intentionally simple with large buttons and minimal steps, designed specifically for ease of use.']
+                ].map(([q,a]) => `
+                  <details style="border:1px solid var(--border); border-radius:14px; padding:14px; background:#fff;">
+                    <summary style="font-weight:700; cursor:pointer;">${q}</summary>
+                    <p style="margin-top:10px; color:#475569;">${a}</p>
+                  </details>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </section>`;
     }
 
     function renderPrivacy() {
@@ -816,6 +843,7 @@
   </script>
 </body>
 </html>
+
 
 
 
