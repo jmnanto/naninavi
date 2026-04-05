@@ -58,11 +58,14 @@
     }
     .btn:hover { border-color: var(--blue-200); color: var(--blue-700); }
     .hero {
-      padding: 36px 0 54px;
+      padding: 36px 0 72px;
       background:
         radial-gradient(circle at top left, rgba(96,165,250,.22), transparent 35%),
         radial-gradient(circle at bottom right, rgba(37,99,235,.18), transparent 28%),
-        linear-gradient(180deg, #f8fbff, #ffffff);
+        linear-gradient(180deg, #f8fbff 0%, #eef5ff 58%, #ffffff 100%);
+    }
+    .page-follow {
+      background: linear-gradient(180deg, rgba(238,245,255,.9) 0%, #ffffff 18%);
     }
     .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: start; }
     .badge {
@@ -194,7 +197,9 @@
       lifestyleCaregiverDad: 'images/woman_with_dad.png',
       lifestyleCaregiverPhone: 'images/caregiver_phone.png',
       lifestyleSonDad: 'images/son_dad.png',
-      homeButton: 'images/home_button.png'
+      homeButton: 'images/home_button.png',
+      driverScreenshot: 'images/driver_screenshot.png',
+      addressScreenshot: 'images/address_screenshot.png'
     };
 
     const resources = [
@@ -399,7 +404,7 @@
                 <img src="${assets.lifestyleSonDad}" alt="Adult son standing with older father outdoors">
               </div>
 
-              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe;">
+              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe; max-width:80%; margin-left:auto; margin-right:auto;">
                 <div style="font-size:1.35rem; font-weight:800;">Caregiver setup</div>
                 <p class="subtle" style="margin:8px 0 0;">Caregivers can preset familiar destinations such as:</p>
                 <ul style="margin:14px 0 0 18px; padding:0; color:#475569; line-height:1.7;">
@@ -452,16 +457,14 @@
               <div class="white-card">
                 <div class="eyebrow">Caregiver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Set up trusted places</h3>
-                <p>Caregivers create a simple list of familiar destinations once.</p>
-                ${cardDestination('Home', '123 Main St', assets.destinationHome)}
-                ${cardDestination('Doctor', 'Routine visit', assets.destinationDoctor)}
-                ${cardDestination('Church', 'Weekly trip', assets.destinationChurch)}
+                <p>Caregivers can build an address book with familiar destinations and exact addresses.</p>
+                <div class="image-shell" style="margin-top:16px;"><img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot"></div>
               </div>
               <div class="white-card">
                 <div class="eyebrow">Driver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Tap and go</h3>
-                <p>Drivers see large, simple buttons with no searching and no confusion.</p>
-                <div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div>
+                <p>Drivers see large destination cards that are easy to recognize and simple to tap.</p>
+                <div class="image-shell" style="margin-top:16px;"><img src="${assets.driverScreenshot}" alt="Driver destination list screenshot"></div>
               </div>
             </div>
             <div class="step-grid">
@@ -533,14 +536,14 @@
     function renderHow() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">How It Works</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Two roles. Two experiences. One simple system.</h1><p class="lead" style="margin-left:auto;margin-right:auto;">NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need.</p></div></section>
-        <section style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers create a simple list of familiar destinations once.</p>${cardDestination('Home','123 Main St, Springville, UT 84663',assets.destinationHome)}${cardDestination('Doctor','897 W Medical Way, Provo, UT 84604',assets.destinationDoctor)}${cardDestination('Church','275 Church Way, Mapleton, UT 84664',assets.destinationChurch)}</div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large, simple buttons with no searching and no confusion.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div></div></div><div class="step-grid"><div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div><div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div><div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div></div></div></section>
+        <section class="page-follow" style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers can build an address book with familiar destinations and exact addresses.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot"></div></div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large destination cards that are easy to recognize and simple to tap.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.driverScreenshot}" alt="Driver destination list screenshot"></div></div></div><div class="step-grid"><div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div><div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div><div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div></div></div></section>
       `;
     }
 
     function renderCaregivers() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">For Caregivers</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Support independence without feeling completely in the dark</h1><p class="lead" style="margin-left:auto;margin-right:auto;">Families often want a middle ground between doing nothing and taking the keys away. NaniNavi is designed for that in-between stage where simplicity and reassurance matter most.</p></div></section>
-        <section style="padding-top:0"><div class="container dual-grid"><div style="display:grid; gap:18px;">${[
+        <section class="page-follow" style="padding-top:0"><div class="container dual-grid"><div style="display:grid; gap:18px;">${[
           ['Reduce uncertainty', 'Know when a trip begins and when your loved one arrives.'],
           ['Support routine and familiarity', 'Preset common destinations so repeat trips feel easier and more consistent.'],
           ['Create a simpler driving plan', 'Build a safer routine around the places your loved one actually goes.'],
@@ -556,26 +559,26 @@
     function renderResources() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">Resources</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Senior driving, caregiver guidance, and family support resources</h1><p class="lead" style="margin-left:auto;margin-right:auto;">This section is designed to answer the questions families actually search for when they are worried about an aging parent and driving.</p></div></section>
-        <section style="padding-top:0"><div class="container resource-grid">${resources.map(item => `
+        <section class="page-follow" style="padding-top:0"><div class="container resource-grid">${resources.map(item => `
           <a class="resource-item" href="#/${item.slug}"><div class="eyebrow">${item.category}</div><div style="font-size:1.4rem; font-weight:800; color:#0f172a; margin-top:8px;">${item.title}</div><p style="color:#475569">${item.description}</p></a>`).join('')}</div></section>`;
     }
 
     function renderSupport() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">Support</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Need help with NaniNavi?</h1><p class="lead" style="margin-left:auto;margin-right:auto;">For product questions, support requests, or launch inquiries, reach out using the details below.</p></div></section>
-        <section style="padding-top:0"><div class="container grid-4" style="grid-template-columns:repeat(3,1fr)"><div class="white-card"><h3>Contact</h3><p>${supportEmail}</p></div><div class="white-card"><h3>Response time</h3><p>Typically within 1 to 2 business days</p></div><div class="white-card"><h3>Help topics</h3><p>App setup, caregiver use, trip notifications, and launch questions</p></div></div></section>`;
+        <section class="page-follow" style="padding-top:0"><div class="container grid-4" style="grid-template-columns:repeat(3,1fr)"><div class="white-card"><h3>Contact</h3><p>${supportEmail}</p></div><div class="white-card"><h3>Response time</h3><p>Typically within 1 to 2 business days</p></div><div class="white-card"><h3>Help topics</h3><p>App setup, caregiver use, trip notifications, and launch questions</p></div></div></section>`;
     }
 
     function renderPrivacy() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">Privacy</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Privacy-first by design</h1><p class="lead" style="margin-left:auto;margin-right:auto;">Replace this section with your final privacy policy. This starter page gives you a clean placeholder for launch and future updates.</p></div></section>
-        <section style="padding-top:0"><div class="container"><div class="white-card"><p>NaniNavi is committed to protecting user information and designing experiences that are simple, respectful, and appropriate for families supporting older adults.</p><p>This placeholder should be replaced with your full legal privacy policy covering data collection, notifications, account handling, analytics, and support contact information.</p><p>Recommended launch sections include what information is collected, how it is used, how notifications work, data retention, third party services, and how users can contact you with questions.</p></div></div></section>`;
+        <section class="page-follow" style="padding-top:0"><div class="container"><div class="white-card"><p>NaniNavi is committed to protecting user information and designing experiences that are simple, respectful, and appropriate for families supporting older adults.</p><p>This placeholder should be replaced with your full legal privacy policy covering data collection, notifications, account handling, analytics, and support contact information.</p><p>Recommended launch sections include what information is collected, how it is used, how notifications work, data retention, third party services, and how users can contact you with questions.</p></div></div></section>`;
     }
 
     function renderArticle(article) {
       return `
         <section class="hero"><div class="container"><div style="max-width:900px; margin:0 auto;"><a href="#/resources" class="eyebrow">Back to resources</a><div class="eyebrow" style="margin-top:20px">${article.category}</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">${article.title}</h1><p class="lead">${article.summary}</p></div></div></section>
-        <section style="padding-top:0"><div class="container" style="max-width:900px;">
+        <section class="page-follow" style="padding-top:0"><div class="container" style="max-width:900px;">
           ${article.sections.map(section => `
             <div class="white-card" style="margin-bottom:24px;">
               <h3 style="margin-top:0; font-size:1.7rem;">${section.heading}</h3>
@@ -636,6 +639,7 @@
   </script>
 </body>
 </html>
+
 
 
 
