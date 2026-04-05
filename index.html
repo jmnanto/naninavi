@@ -34,8 +34,9 @@
     .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
     .header {
       position: sticky; top: 0; z-index: 20;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(248,251,255,0.92) 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(219,234,254,0.9);
     }
     .header-inner {
       display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0;
@@ -58,14 +59,17 @@
     }
     .btn:hover { border-color: var(--blue-200); color: var(--blue-700); }
     .hero {
-      padding: 36px 0 92px;
+      padding: 36px 0 108px;
       background:
-        radial-gradient(circle at top left, rgba(96,165,250,.18), transparent 40%),
-        radial-gradient(circle at bottom right, rgba(81,105,137,.12), transparent 34%),
-        linear-gradient(180deg, #f8fbff 0%, #eef4fb 72%, #f7f9fc 88%, #ffffff 100%);
+        radial-gradient(circle at top left, rgba(96,165,250,.16), transparent 42%),
+        radial-gradient(circle at bottom right, rgba(81,105,137,.10), transparent 36%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4fb 58%, #e9f0f8 76%, #edf3f9 88%, #f7fafd 96%, #fbfdff 100%);
     }
     .page-follow {
-      background: linear-gradient(180deg, #f7f9fc 0%, #fbfdff 10%, #ffffff 28%);
+      margin-top: -42px;
+      padding-top: 42px;
+      background:
+        linear-gradient(180deg, rgba(247,250,253,0.98) 0%, rgba(250,252,255,0.94) 16%, #ffffff 40%);
     }
     .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: start; }
     .badge {
@@ -105,8 +109,15 @@
     .soft-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .soft-tags span { background: var(--blue-50); color: var(--blue-700); padding: 8px 10px; border-radius: 999px; font-weight: 600; font-size: .84rem; }
     section { padding: 80px 0; }
-    .blue-section { background: linear-gradient(180deg, var(--blue-50), rgba(219,234,254,.45), white); }
-    .trust { background: var(--blue-50); border-top: 1px solid var(--blue-100); border-bottom: 1px solid var(--blue-100); padding: 18px 0; }
+    .blue-section {
+      background: linear-gradient(180deg, #f7fbff 0%, rgba(219,234,254,.52) 46%, #ffffff 100%);
+    }
+    .trust {
+      background: linear-gradient(180deg, #eef4fb 0%, #f3f8fd 100%);
+      border-top: 1px solid var(--blue-100);
+      border-bottom: 1px solid var(--blue-100);
+      padding: 18px 0;
+    }
     .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; color: #1e3a8a; font-weight: 700; }
     .title-block { text-align: center; max-width: 780px; margin: 0 auto 42px; }
     .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-weight: 800; font-size: .8rem; color: var(--blue-700); }
@@ -637,6 +648,7 @@
   </script>
 </body>
 </html>
+
 
 
 
