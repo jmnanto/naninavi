@@ -404,19 +404,6 @@
                 <img src="${assets.lifestyleSonDad}" alt="Adult son standing with older father outdoors">
               </div>
 
-              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe; max-width:80%; margin-left:auto; margin-right:auto;">
-                <div style="font-size:1.35rem; font-weight:800;">Caregiver setup</div>
-                <p class="subtle" style="margin:8px 0 0;">Caregivers can preset familiar destinations such as:</p>
-                <ul style="margin:14px 0 0 18px; padding:0; color:#475569; line-height:1.7;">
-                  <li>Home</li>
-                  <li>Doctor</li>
-                  <li>Church</li>
-                </ul>
-                <div class="inner">
-                  ${cardDestination('Home', '123 Main St, Springville, UT 84663', assets.destinationHome)}
-                  ${cardDestination('Doctor', '897 W Medical Way, Provo, UT 84604', assets.destinationDoctor)}
-                  ${cardDestination('Church', '275 Church Way, Mapleton, UT 84664', assets.destinationChurch)}
-                </div>
               </div>
             </div>
           </div>
@@ -458,13 +445,17 @@
                 <div class="eyebrow">Caregiver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Set up trusted places</h3>
                 <p>Caregivers can build an address book with familiar destinations and exact addresses.</p>
-                <div class="image-shell" style="margin-top:16px;"><img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot"></div>
+                <div class="image-shell" style="margin-top:16px; max-width:70%;">
+                  <img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot">
+                </div>
               </div>
               <div class="white-card">
                 <div class="eyebrow">Driver View</div>
                 <h3 style="margin-top:10px; font-size:1.3rem">Tap and go</h3>
                 <p>Drivers see large destination cards that are easy to recognize and simple to tap.</p>
-                <div class="image-shell" style="margin-top:16px;"><img src="${assets.driverScreenshot}" alt="Driver destination list screenshot"></div>
+                <div class="image-shell" style="margin-top:16px; max-width:70%;">
+                  <img src="${assets.driverScreenshot}" alt="Driver destination list screenshot">
+                </div>
               </div>
             </div>
             <div class="step-grid">
@@ -488,14 +479,14 @@
               </div>
             </div>
             <div class="image-collage">
-              <div class="image-shell"><img src="${assets.lifestyleCaregiverPhone}" alt="Caregiver checking a phone at home"></div>
+              <div class="image-shell" style="max-width:80%; margin:0 auto;"><img src="${assets.lifestyleCaregiverPhone}" alt="Caregiver checking a phone at home"></div>
             </div>
           </div>
         </section>
 
         <section class="blue-section">
           <div class="container image-text" style="grid-template-columns:.95fr 1fr;">
-            <div class="image-shell"><img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together"></div>
+            <div class="image-shell" style="max-width:80%; margin:0 auto;"><img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together"></div>
             <div>
               <div class="eyebrow">For the people who matter most</div>
               <h2>Familiar places made easier for seniors and their families.</h2>
@@ -536,7 +527,11 @@
     function renderHow() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">How It Works</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Two roles. Two experiences. One simple system.</h1><p class="lead" style="margin-left:auto;margin-right:auto;">NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need.</p></div></section>
-        <section class="page-follow" style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers can build an address book with familiar destinations and exact addresses.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot"></div></div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large destination cards that are easy to recognize and simple to tap.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.driverScreenshot}" alt="Driver destination list screenshot"></div></div></div><div class="step-grid"><div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div><div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div><div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div></div></div></section>
+        <section class="page-follow" style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers can build an address book with familiar destinations and exact addresses.</p><div class="image-shell" style="margin-top:16px; max-width:70%;">
+                  <img src="${assets.addressScreenshot}" alt="Caregiver address book screenshot">
+                </div></div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large destination cards that are easy to recognize and simple to tap.</p><div class="image-shell" style="margin-top:16px; max-width:70%;">
+                  <img src="${assets.driverScreenshot}" alt="Driver destination list screenshot">
+                </div></div></div><div class="step-grid"><div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div><div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div><div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div></div></div></section>
       `;
     }
 
@@ -639,6 +634,7 @@
   </script>
 </body>
 </html>
+
 
 
 
