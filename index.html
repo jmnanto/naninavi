@@ -64,7 +64,7 @@
         radial-gradient(circle at bottom right, rgba(37,99,235,.18), transparent 28%),
         linear-gradient(180deg, #f8fbff, #ffffff);
     }
-    .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: start; }
     .badge {
       display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px;
       border: 1px solid var(--blue-100); background: rgba(255,255,255,.88); color: var(--blue-700); font-weight: 700;
@@ -90,12 +90,12 @@
     .subtle { color: #64748b; font-size: .94rem; }
     .inner { background: white; border-radius: 22px; padding: 16px; margin-top: 14px; box-shadow: inset 0 0 0 1px rgba(226,232,240,.8); }
     .dest-btn {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid #eef2f7;
-      background: #f8fafc; border-radius: 18px; margin-top: 10px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border: 1px solid #e7edf5;
+      background: #f8fafc; border-radius: 20px; margin-top: 12px;
     }
-    .dest-left { display: flex; gap: 12px; align-items: center; }
-    .dest-iconbox { width: 56px; height: 56px; background: white; border-radius: 18px; padding: 4px; box-shadow: 0 3px 10px rgba(15,23,42,.05); }
-    .nav-round { width: 44px; height: 44px; border-radius: 999px; background: white; display: grid; place-items: center; box-shadow: 0 3px 10px rgba(15,23,42,.05); color: var(--blue-700); font-weight: 700; }
+    .dest-left { display: flex; gap: 14px; align-items: center; }
+    .dest-iconbox { width: 62px; height: 62px; background: white; border-radius: 18px; padding: 6px; box-shadow: 0 3px 10px rgba(15,23,42,.05); flex: 0 0 auto; }
+    .nav-round { width: 46px; height: 46px; border-radius: 999px; background: white; display: grid; place-items: center; box-shadow: 0 3px 10px rgba(15,23,42,.05); color: var(--blue-700); font-weight: 700; flex: 0 0 auto; }
     .notif { background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 16px; box-shadow: 0 6px 18px rgba(15,23,42,.05); margin-top: 12px; }
     .notif-row { display: flex; gap: 12px; align-items: flex-start; }
     .soft-block { padding: 18px; }
@@ -351,14 +351,14 @@
       return '➜';
     }
 
-    function cardDestination(label, sublabel, img) {
+    function cardDestination(label, address, img) {
       return `
         <div class="dest-btn">
           <div class="dest-left">
             <div class="dest-iconbox"><img src="${img}" alt="${label} icon"></div>
             <div>
-              <div style="font-weight:700; font-size:1.05rem">${label}</div>
-              <div class="subtle">${sublabel}</div>
+              <div style="font-weight:800; font-size:1.15rem; color:#0f172a;">${label}</div>
+              <div class="subtle" style="margin-top:4px; line-height:1.45;">${address}</div>
             </div>
           </div>
           <div class="nav-round">${iconArrow()}</div>
@@ -398,13 +398,18 @@
               </div>
             </div>
             <div class="hero-side">
-              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe;">
+              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe; margin-top:20px;">
                 <div style="font-size:1.35rem; font-weight:800;">Caregiver setup</div>
-                <p class="subtle" style="margin:8px 0 0;">Create familiar destinations once so every trip is easier for the driver.</p>
+                <p class="subtle" style="margin:8px 0 0;">Caregivers can preset familiar destinations such as:</p>
+                <ul style="margin:14px 0 0 18px; padding:0; color:#475569; line-height:1.7;">
+                  <li>Home</li>
+                  <li>Doctor</li>
+                  <li>Church</li>
+                </ul>
                 <div class="inner">
-                  ${cardDestination('Home', 'Large, easy to use navigation button', assets.destinationHome)}
-                  ${cardDestination('Doctor', 'Trusted destination set by caregiver', assets.destinationDoctor)}
-                  ${cardDestination('Church', 'Routine trip with less confusion', assets.destinationChurch)}
+                  ${cardDestination('Home', '123 Main St, Springville, UT 84663', assets.destinationHome)}
+                  ${cardDestination('Doctor', '897 W Medical Way, Provo, UT 84604', assets.destinationDoctor)}
+                  ${cardDestination('Church', '275 Church Way, Mapleton, UT 84664', assets.destinationChurch)}
                 </div>
               </div>
 
@@ -558,7 +563,7 @@
     function renderHow() {
       return `
         <section class="hero"><div class="container title-block"><div class="eyebrow">How It Works</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Two roles. Two experiences. One simple system.</h1><p class="lead" style="margin-left:auto;margin-right:auto;">NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need.</p></div></section>
-        <section style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers create a simple list of familiar destinations once.</p>${cardDestination('Home','123 Main St',assets.destinationHome)}${cardDestination('Doctor','Routine visit',assets.destinationDoctor)}${cardDestination('Church','Weekly trip',assets.destinationChurch)}</div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large, simple buttons with no searching and no confusion.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div></div></div></div></section>
+        <section style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers create a simple list of familiar destinations once.</p>${cardDestination('Home','123 Main St, Springville, UT 84663',assets.destinationHome)}${cardDestination('Doctor','897 W Medical Way, Provo, UT 84604',assets.destinationDoctor)}${cardDestination('Church','275 Church Way, Mapleton, UT 84664',assets.destinationChurch)}</div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large, simple buttons with no searching and no confusion.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div></div></div></div></section>
       `;
     }
 
@@ -661,6 +666,7 @@
   </script>
 </body>
 </html>
+
 
 
 
