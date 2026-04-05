@@ -649,7 +649,7 @@
           <div class="container">
             <div class="eyebrow">Resource center</div>
             <h2>Practical help for caregivers searching for answers.</h2>
-            <p class="lead" style="font-size:1.08rem; max-width:760px">If you are worried about a parent or loved one driving, these guides walk you through what to look for, how to start the conversation, and what to do next.</p>
+            <p class="lead" style="font-size:1.08rem; max-width:760px">If you are worried about a parent or loved one driving, these guides help you understand what to look for, how to start the conversation, and what to do next.</p>
             <div class="resource-grid">${articleList()}</div>
           </div>
         </section>
@@ -699,7 +699,7 @@
 
     function renderResources() {
       return `
-        <section class="hero"><div class="container title-block"><div class="eyebrow">Resources</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Senior driving, caregiver guidance, and family support resources</h1><p class="lead" style="margin-left:auto;margin-right:auto;">This section is designed to answer the questions families actually search for when they are worried about an aging parent and driving.</p></div></section>
+        <section class="hero"><div class="container title-block"><div class="eyebrow">Resources</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Senior driving, caregiver guidance, and family support resources</h1><p class="lead" style="margin-left:auto;margin-right:auto;">If you are worried about a parent or loved one driving, these guides help you understand what to look for, how to start the conversation, and what to do next.</p></div></section>
         <section class="page-follow" style="padding-top:0"><div class="container resource-grid">${resources.map(item => `
           <a class="resource-item" href="#/${item.slug}"><div class="eyebrow">${item.category}</div><div style="font-size:1.4rem; font-weight:800; color:#0f172a; margin-top:8px;">${item.title}</div><p style="color:#475569">${item.description}</p></a>`).join('')}</div></section>`;
     }
@@ -794,6 +794,7 @@
   </script>
 </body>
 </html>
+
 
 
 
