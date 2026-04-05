@@ -1,1225 +1,661 @@
-import React, { useEffect, useMemo, useState } from 'react';
-
-const appStoreUrl = 'https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523';
-const supportEmail = 'support@naninavi.com';
-const defaultSeoTitle = 'NaniNavi | Senior driving support for caregivers';
-
-// Image slots for deployment:
-// Place these files in /public/images/ when preparing the deployable site.
-const assets = {
-  destinationHome: '/images/home_icon_new.png',
-  destinationChurch: '/images/church_icon_new.png',
-  destinationDoctor: '/images/doctor_icon_new.png',
-  destinationGas: '/images/gas_icon_new.png',
-  destinationPark: '/images/park_icon_new.png',
-  destinationRestaurant: '/images/restaurant_icon_new.png',
-  screenshot1: '/images/naninavi_screenshot1.png',
-  screenshot2: '/images/naninavi_screenshot2.png',
-  screenshot3: '/images/naninavi_screenshot3.png',
-  screenshot4: '/images/naninavi_screenshot4.png',
-  screenshot5: '/images/naninavi_screenshot5.png',
-  lifestyleSenior: '/images/elderly_man2.png',
-  lifestyleCaregiverDad: '/images/woman_with_dad.png',
-  lifestyleCaregiverPhone: '/images/caregiver_phone.png',
-  lifestyleSonDad: '/images/son_dad.png',
-};
-
-const brand = {
-  blue900: '#1E3A8A',
-  blue800: '#2563EB',
-  blue700: '#3B82F6',
-  blue600: '#60A5FA',
-  blue100: '#DBEAFE',
-  blue50: '#EFF6FF',
-  ink: '#0F172A',
-};
-
-const resources = [
-  {
-    slug: 'when-should-an-elderly-parent-stop-driving',
-    title: 'When Should an Elderly Parent Stop Driving?',
-    description:
-      'A practical guide to the signs, risks, and next steps families can use when they are worried about an aging parent behind the wheel.',
-    category: 'Driving & Safety',
-    seoTitle: 'When Should an Elderly Parent Stop Driving? | NaniNavi',
-    summary:
-      'Many families wait too long because the conversation feels emotional. The best approach is to watch for patterns, not one isolated mistake, and to have a plan before a crisis happens.',
-    sections: [
-      {
-        heading: 'Common signs driving may no longer be safe',
-        body: [
-          'Watch for repeated close calls, new dents or scrapes, getting lost on familiar routes, slow reaction time, confusion at intersections, difficulty judging distance, or increased anxiety while driving.',
-          'Family members often notice subtle changes before the driver does. A pattern of concern matters more than one bad day.',
-        ],
-        bullets: [
-          'Missing turns or exits repeatedly',
-          'Trouble reading signs or reacting to traffic lights',
-          'New fear when driving at night, in rain, or in heavier traffic',
-          'Confusing the brake and gas pedals',
-          'Comments from neighbors, friends, or passengers about unsafe driving',
-        ],
-      },
-      {
-        heading: 'What families should do next',
-        body: [
-          'Start with observation, then move to a calm conversation. Focus on safety, not blame. If needed, involve a doctor, occupational therapist, or trusted third party.',
-          'Make the transition easier by preparing alternatives before asking your loved one to limit or stop driving.',
-        ],
-        bullets: [
-          'Track concerning incidents for a few weeks',
-          'Choose a calm time to talk',
-          'Offer rides, ride-share help, family schedules, or preset navigation tools',
-          'Reduce driving gradually before eliminating it entirely when possible',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'signs-it-is-no-longer-safe-for-seniors-to-drive',
-    title: 'Signs It Is No Longer Safe for Seniors to Drive',
-    description:
-      'Specific warning signs caregivers can watch for when trying to decide whether an older adult needs driving support or a transition plan.',
-    category: 'Driving & Safety',
-    seoTitle: 'Signs It Is No Longer Safe for Seniors to Drive | NaniNavi',
-    summary:
-      'Driving ability often changes gradually. Caregivers can reduce risk by learning the warning signs early and putting support in place before a dangerous event occurs.',
-    sections: [
-      {
-        heading: 'Physical and cognitive warning signs',
-        body: [
-          'Limited neck rotation, slower reaction time, reduced vision, medication side effects, memory issues, and difficulty processing multiple inputs all affect driving safety.',
-          'These changes do not always mean driving must stop immediately, but they do mean the family should evaluate risk seriously.',
-        ],
-        bullets: [
-          'Difficulty backing up or checking blind spots',
-          'Delayed response to braking vehicles or pedestrians',
-          'Forgetting destinations mid-trip',
-          'Panic in situations they used to handle comfortably',
-        ],
-      },
-      {
-        heading: 'Behavioral signs families often miss',
-        body: [
-          'Some older adults begin self-limiting before the family notices. They may avoid night driving, highways, left turns, or unfamiliar areas. That can be an early sign they no longer feel confident.',
-          'Pay attention when a parent starts making excuses not to drive or becomes defensive whenever the subject comes up.',
-        ],
-        bullets: [
-          'Driving only to a few highly familiar places',
-          'Refusing trips after dark',
-          'Unexplained damage to the car',
-          'Traffic tickets or near misses',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'how-to-talk-to-your-parents-about-giving-up-driving',
-    title: 'How to Talk to Your Parents About Giving Up Driving',
-    description:
-      'A respectful framework for starting one of the hardest caregiver conversations without creating a fight or making your parent feel powerless.',
-    category: 'Difficult Conversations',
-    seoTitle: 'How to Talk to Your Parents About Giving Up Driving | NaniNavi',
-    summary:
-      'This conversation usually goes better when families lead with empathy, examples, and alternatives. The goal is not to win an argument. The goal is to protect dignity and safety at the same time.',
-    sections: [
-      {
-        heading: 'Lead with empathy, not control',
-        body: [
-          'Driving is tied to independence, identity, and pride. A confrontational approach can backfire quickly. Start by acknowledging how hard the topic is and why it matters.',
-          'Use real observations instead of general criticism. Be specific and calm.',
-        ],
-        bullets: [
-          'Pick a quiet, unhurried moment',
-          'Use “I’m concerned” instead of “You can’t”',
-          'Name specific incidents without exaggeration',
-          'Avoid shaming language or public confrontations',
-        ],
-      },
-      {
-        heading: 'Offer a plan, not just a restriction',
-        body: [
-          'The conversation becomes less threatening when families can say what comes next. Transportation alternatives, family coordination, and simple tools can reduce fear.',
-          'For some families, preset destination tools are helpful because they preserve routine while also keeping caregivers informed.',
-        ],
-        bullets: [
-          'Create a transportation backup list',
-          'Set up preset locations for safer trips',
-          'Coordinate who can help on which days',
-          'Review the plan together after a week or two',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'alternatives-to-driving-for-seniors',
-    title: 'Alternatives to Driving for Seniors',
-    description:
-      'Transportation options families can use when an older adult should drive less or stop driving altogether.',
-    category: 'Transportation Options',
-    seoTitle: 'Alternatives to Driving for Seniors | NaniNavi',
-    summary:
-      'Losing the ability to drive does not have to mean losing independence. The best transition plans combine family help, local transportation options, and routines that are easy to follow.',
-    sections: [
-      {
-        heading: 'Options families can combine',
-        body: [
-          'Many seniors do best with more than one transportation solution. Family rides may cover medical visits while community shuttles, church groups, neighbors, or ride-share services fill the gaps.',
-          'What matters most is predictability. A clear plan reduces resistance and anxiety.',
-        ],
-        bullets: [
-          'Family ride schedule',
-          'Senior transportation programs',
-          'Public transit with support',
-          'Ride-share with preset destinations',
-          'Delivery services for groceries and prescriptions',
-        ],
-      },
-      {
-        heading: 'How to make the transition easier',
-        body: [
-          'Write down the most common places your loved one goes each week and build a replacement plan around those routines first.',
-          'A tool like NaniNavi can help when a family member still drives certain familiar routes and you want a simpler, safer routine with caregiver visibility.',
-        ],
-        bullets: [
-          'Start with church, doctor, pharmacy, and family homes',
-          'Reduce unnecessary trips with delivery services',
-          'Keep the plan visible and easy to follow',
-          'Make support feel normal, not punitive',
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'how-to-track-when-a-loved-one-arrives-safely',
-    title: 'How to Track When a Loved One Arrives Safely',
-    description:
-      'Simple ways caregivers can reduce stress by knowing when an aging parent or family member has started a trip and arrived safely.',
-    category: 'Caregiver Tools',
-    seoTitle: 'How to Track When a Loved One Arrives Safely | NaniNavi',
-    summary:
-      'For many families, the hardest part is not the trip itself. It is the uncertainty. Reliable updates can reduce caregiver stress and help older adults keep more independence.',
-    sections: [
-      {
-        heading: 'Why arrival visibility matters',
-        body: [
-          'Caregivers often worry silently: Did they leave? Did they get confused? Did they arrive? Even a short trip can create stress when there is no update.',
-          'A simple routine that confirms when a trip begins and ends can be enough to make everyday transportation feel manageable.',
-        ],
-        bullets: [
-          'Reduces uncertainty for caregivers',
-          'Supports independence without constant calls',
-          'Creates a repeatable trip routine',
-          'Helps families notice changes over time',
-        ],
-      },
-      {
-        heading: 'What to look for in a tool',
-        body: [
-          'Families usually need simplicity more than complexity. The best solutions are clear, predictable, and easy for an older adult or a family driver to use consistently.',
-          'NaniNavi was designed around preset destinations, simple navigation, and caregiver awareness for the moments that matter most.',
-        ],
-        bullets: [
-          'Large, easy-to-use destination buttons',
-          'Minimal setup for recurring places',
-          'Clear trip-start and arrival workflow',
-          'Caregiver-friendly notifications',
-        ],
-      },
-    ],
-  },
-];
-
-const routes = {
-  '/': 'home',
-  '/how-it-works': 'how',
-  '/for-caregivers': 'caregivers',
-  '/resources': 'resources',
-  '/support': 'support',
-  '/privacy': 'privacy',
-};
-
-function normalizeHashPath(rawHash) {
-  const hash = rawHash || '#/';
-  const stripped = hash.replace(/^#/, '');
-  return stripped || '/';
-}
-
-function getSeoTitle(path) {
-  const resource = resources.find((item) => `/${item.slug}` === path);
-  return resource ? resource.seoTitle : defaultSeoTitle;
-}
-
-function getPageKey(path) {
-  if (routes[path]) return routes[path];
-  const resource = resources.find((item) => `/${item.slug}` === path);
-  return resource ? 'resource' : 'not-found';
-}
-
-function runSanityChecks() {
-  const checks = [
-    ['normalizes empty hash to /', normalizeHashPath('') === '/'],
-    ['normalizes #/resources', normalizeHashPath('#/resources') === '/resources'],
-    ['normalizes bare # to /', normalizeHashPath('#') === '/'],
-    ['finds resource SEO title', getSeoTitle('/when-should-an-elderly-parent-stop-driving').includes('When Should an Elderly Parent Stop Driving?')],
-    ['falls back to default SEO title', getSeoTitle('/missing-page') === defaultSeoTitle],
-    ['maps home route', getPageKey('/') === 'home'],
-    ['maps resource route', getPageKey('/how-to-track-when-a-loved-one-arrives-safely') === 'resource'],
-    ['maps missing route', getPageKey('/does-not-exist') === 'not-found'],
-  ];
-
-  checks.forEach(([label, passed]) => {
-    console.assert(Boolean(passed), `Sanity check failed: ${label}`);
-  });
-}
-
-function Icon({ name, className = 'h-5 w-5' }) {
-  const common = {
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 2,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round',
-  };
-
-  const icons = {
-    menu: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M4 7h16M4 12h16M4 17h16" /></svg>,
-    x: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M6 6l12 12M18 6L6 18" /></svg>,
-    bell: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .53-.21 1.04-.59 1.41L4 17h5" /><path {...common} d="M9.5 17a2.5 2.5 0 0 0 5 0" /></svg>,
-    chevronRight: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M9 6l6 6-6 6" /></svg>,
-    users: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" /><circle cx="9.5" cy="7" r="3" {...common} /><path {...common} d="M22 21v-2a4 4 0 0 0-3-3.87" /><path {...common} d="M16 4.13A3 3 0 0 1 16 10" /></svg>,
-    check: <svg viewBox="0 0 24 24" className={className}><circle cx="12" cy="12" r="9" {...common} /><path {...common} d="m8.5 12 2.3 2.3 4.7-4.8" /></svg>,
-    phone: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 11.2 19a19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8l-1.3 1.3a16 16 0 0 0 6.5 6.5l1.3-1.3a2 2 0 0 1 1.8-.6l3 .5A2 2 0 0 1 22 16.9Z" /></svg>,
-    clock: <svg viewBox="0 0 24 24" className={className}><circle cx="12" cy="12" r="9" {...common} /><path {...common} d="M12 7v5l3 2" /></svg>,
-    arrowRight: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M5 12h14" /><path {...common} d="m13 6 6 6-6 6" /></svg>,
-    search: <svg viewBox="0 0 24 24" className={className}><circle cx="11" cy="11" r="7" {...common} /><path {...common} d="m20 20-3.5-3.5" /></svg>,
-    file: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path {...common} d="M14 2v6h6" /><path {...common} d="M8 13h8M8 17h6" /></svg>,
-    alert: <svg viewBox="0 0 24 24" className={className}><path {...common} d="M12 3 2 20h20L12 3Z" /><path {...common} d="M12 9v4" /><circle cx="12" cy="17" r="1" fill="currentColor" /></svg>,
-    navigation: <svg viewBox="0 0 24 24" className={className}><path {...common} d="m3 11 18-8-8 18-2.5-7.5L3 11Z" /></svg>,
-  };
-
-  return icons[name] || null;
-}
-
-function BrandMark({ className = 'h-8 w-8', small = false }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="pinGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#93C5FD" />
-          <stop offset="100%" stopColor="#2563EB" />
-        </linearGradient>
-        <linearGradient id="heartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="100%" stopColor="#E2E8F0" />
-        </linearGradient>
-      </defs>
-      <path d="M32 60c10-12.1 21-24.9 21-37.5C53 10.7 43.2 3 32 3S11 10.7 11 22.5C11 35.1 22 47.9 32 60Z" fill="url(#pinGrad)" />
-      <circle cx="32" cy="24" r="15.5" fill="#2563EB" opacity="0.95" />
-      <path d="M32 32.7c-4.2-2.7-9.8-6.7-9.8-11.8 0-3.3 2.5-5.9 5.7-5.9 1.8 0 3.2.8 4.1 2.2.9-1.4 2.3-2.2 4.1-2.2 3.2 0 5.7 2.6 5.7 5.9 0 5.1-5.6 9.1-9.8 11.8Z" fill="url(#heartGrad)" />
-      {!small ? <ellipse cx="24" cy="15" rx="6.2" ry="2.6" fill="white" opacity="0.55" transform="rotate(-35 24 15)" /> : null}
-    </svg>
-  );
-}
-
-function FadeIn({ children, delay = 0 }) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const id = window.setTimeout(() => setVisible(true), delay);
-    return () => window.clearTimeout(id);
-  }, [delay]);
-  return (
-    <div
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0px)' : 'translateY(14px)',
-        transition: 'opacity 500ms ease, transform 500ms ease',
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function useRoute() {
-  const getPath = () => normalizeHashPath(window.location.hash);
-  const [path, setPath] = useState(getPath());
-
-  useEffect(() => {
-    const onChange = () => setPath(getPath());
-    window.addEventListener('hashchange', onChange);
-    return () => window.removeEventListener('hashchange', onChange);
-  }, []);
-
-  return path;
-}
-
-function NavLink({ href, children, onClick, mobile = false }) {
-  return (
-    <a
-      href={`#${href}`}
-      onClick={onClick}
-      className={`transition hover:text-blue-700 ${mobile ? 'block rounded-xl px-4 py-3 text-base font-medium hover:bg-slate-50' : 'text-sm font-medium text-slate-700'}`}
-    >
-      {children}
-    </a>
-  );
-}
-
-function Container({ children, className = '' }) {
-  return <div className={`mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
-}
-
-function Badge({ children }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm backdrop-blur">
-      <BrandMark className="h-4 w-4" small />
-      {children}
-    </div>
-  );
-}
-
-function SectionTitle({ eyebrow, title, text }) {
-  return (
-    <div className="mx-auto max-w-3xl text-center">
-      {eyebrow ? <div className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">{eyebrow}</div> : null}
-      <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
-      {text ? <p className="mt-4 text-lg leading-8 text-slate-600">{text}</p> : null}
-    </div>
-  );
-}
-
-function AppStoreBadge() {
-  return (
-    <a
-      href={appStoreUrl}
-      className="inline-flex items-center rounded-2xl bg-slate-900 px-5 py-3 text-white shadow-sm transition hover:-translate-y-0.5"
-    >
-      <svg viewBox="0 0 24 24" className="mr-3 h-6 w-6 fill-current" aria-hidden="true">
-        <path d="M16.7 12.2c0-2 1.7-3 1.8-3.1-1-1.5-2.5-1.7-3-1.7-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.8-2.7-.8-1.4 0-2.7.8-3.4 2.1-1.5 2.5-.4 6.1 1 8.1.7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.7-.7 1.2 0 1.6.7 2.7.7 1.1 0 1.8-1 2.5-2 .8-1.2 1.1-2.5 1.1-2.6-.1 0-2.1-.8-2.2-3Zm-2.1-6c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.6 1.3-.6.7-1.1 1.7-1 2.6 1 .1 2-.5 2.7-1.2Z" />
-      </svg>
-      <div>
-        <div className="text-[10px] uppercase tracking-[0.2em] text-slate-300">Download on the</div>
-        <div className="text-base font-semibold">App Store</div>
-      </div>
-    </a>
-  );
-}
-
-function TripNotification({ title, text }) {
-  return (
-    <div className="rounded-2xl border border-white/80 bg-white/95 p-4 shadow-xl backdrop-blur">
-      <div className="flex items-start gap-3">
-        <div className="rounded-xl bg-blue-50 p-2 text-blue-700">
-          <BrandMark className="h-5 w-5" small />
-        </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NaniNavi | Senior driving support for caregivers</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-700: #3b82f6;
+      --brand: #516989;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 24px;
+      --max: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 44px; height: 44px; }
+    .brand-title { font-size: 1.65rem; font-weight: 800; line-height: 1; }
+    .brand-sub { font-size: 0.72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-700); margin-top: 4px; }
+    .nav { display: flex; gap: 24px; color: #334155; font-weight: 600; }
+    .nav a:hover { color: var(--blue-700); }
+    .app-badge {
+      display: inline-flex; align-items: center; gap: 12px; background: #111827; color: white;
+      padding: 12px 18px; border-radius: 18px; box-shadow: var(--shadow); font-weight: 600;
+    }
+    .app-badge small { display: block; text-transform: uppercase; letter-spacing: .14em; color: #cbd5e1; font-size: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; padding: 16px 22px; border-radius: 18px;
+      border: 1px solid var(--border); background: white; color: var(--text); font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15,23,42,.04);
+    }
+    .btn:hover { border-color: var(--blue-200); color: var(--blue-700); }
+    .hero {
+      padding: 36px 0 54px;
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.22), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(37,99,235,.18), transparent 28%),
+        linear-gradient(180deg, #f8fbff, #ffffff);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 48px; align-items: center; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px;
+      border: 1px solid var(--blue-100); background: rgba(255,255,255,.88); color: var(--blue-700); font-weight: 700;
+    }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.04; margin: 18px 0 0; }
+    .lead { font-size: 1.18rem; color: var(--muted); max-width: 700px; margin-top: 18px; }
+    .cta-row, .chip-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border);
+      padding: 10px 14px; border-radius: 999px; color: var(--muted); font-size: .95rem; box-shadow: 0 4px 14px rgba(15,23,42,.04);
+    }
+    .cards3 { margin-top: 28px; display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+    .info-card, .card, .white-card {
+      background: white; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .info-card { padding: 18px; }
+    .info-card h3 { margin: 0; font-size: 1rem; }
+    .info-card p { margin: 8px 0 0; color: var(--muted); font-size: .94rem; }
+    .hero-side { display: grid; grid-template-columns: .96fr .88fr; gap: 18px; }
+    .card { padding: 16px; }
+    .card-head { display: flex; align-items: center; justify-content: space-between; background: white; border-radius: 18px; padding: 12px 14px; box-shadow: 0 3px 12px rgba(15,23,42,.05); }
+    .kicker { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); font-weight: 800; }
+    .subtle { color: #64748b; font-size: .94rem; }
+    .inner { background: white; border-radius: 22px; padding: 16px; margin-top: 14px; box-shadow: inset 0 0 0 1px rgba(226,232,240,.8); }
+    .dest-btn {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid #eef2f7;
+      background: #f8fafc; border-radius: 18px; margin-top: 10px;
+    }
+    .dest-left { display: flex; gap: 12px; align-items: center; }
+    .dest-iconbox { width: 56px; height: 56px; background: white; border-radius: 18px; padding: 4px; box-shadow: 0 3px 10px rgba(15,23,42,.05); }
+    .nav-round { width: 44px; height: 44px; border-radius: 999px; background: white; display: grid; place-items: center; box-shadow: 0 3px 10px rgba(15,23,42,.05); color: var(--blue-700); font-weight: 700; }
+    .notif { background: rgba(255,255,255,.95); border: 1px solid rgba(255,255,255,.9); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); margin-top: 10px; }
+    .notif-row { display: flex; gap: 12px; }
+    .soft-block { padding: 18px; }
+    .soft-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .soft-tags span { background: var(--blue-50); color: var(--blue-700); padding: 8px 10px; border-radius: 999px; font-weight: 600; font-size: .84rem; }
+    section { padding: 80px 0; }
+    .blue-section { background: linear-gradient(180deg, var(--blue-50), rgba(219,234,254,.45), white); }
+    .trust { background: var(--blue-50); border-top: 1px solid var(--blue-100); border-bottom: 1px solid var(--blue-100); padding: 18px 0; }
+    .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; color: #1e3a8a; font-weight: 700; }
+    .title-block { text-align: center; max-width: 780px; margin: 0 auto 42px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-weight: 800; font-size: .8rem; color: var(--blue-700); }
+    h2 { margin: 12px 0 0; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; }
+    .title-block p { color: var(--muted); font-size: 1.1rem; margin-top: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .white-card { padding: 26px; }
+    .white-card .icon-wrap { width: 64px; height: 64px; border-radius: 18px; background: white; display: grid; place-items: center; box-shadow: 0 3px 10px rgba(15,23,42,.05); }
+    .white-card h3 { margin: 18px 0 0; font-size: 1.25rem; }
+    .white-card p { margin-top: 10px; color: var(--muted); }
+    .dual-grid, .step-grid, .image-text, .resource-grid { display: grid; gap: 24px; }
+    .dual-grid { grid-template-columns: repeat(2, 1fr); }
+    .step-grid { grid-template-columns: repeat(3, 1fr); margin-top: 28px; }
+    .step-card { padding: 24px; }
+    .step-card p { color: var(--muted); }
+    .image-text { grid-template-columns: 1fr .95fr; align-items: center; }
+    .image-collage { display: grid; gap: 18px; }
+    .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .image-shell { overflow: hidden; border-radius: 32px; border: 1px solid var(--blue-100); background: white; box-shadow: var(--shadow); }
+    .image-shell img { width: 100%; height: 100%; object-fit: cover; }
+    .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .icon-card { background: white; border-radius: 18px; box-shadow: 0 4px 14px rgba(15,23,42,.05); padding: 16px; text-align: center; }
+    .icon-card .img-wrap { width: 80px; height: 80px; margin: 0 auto; }
+    .resource-grid { grid-template-columns: repeat(2, 1fr); margin-top: 28px; }
+    .resource-item { padding: 18px; background: white; border: 1px solid var(--blue-100); border-radius: 18px; box-shadow: 0 4px 14px rgba(15,23,42,.05); }
+    .resource-item:hover { transform: translateY(-2px); background: var(--blue-50); border-color: var(--blue-200); }
+    .cta-final { background: #516989; color: white; text-align: center; }
+    .cta-final p { color: #eff6ff; max-width: 760px; margin: 18px auto 0; font-size: 1.1rem; }
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); background: white; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; color: #64748b; }
+    .hidden { display: none; }
+    @media (max-width: 1024px) {
+      .hero-grid, .hero-side, .grid-4, .dual-grid, .step-grid, .image-text, .resource-grid { grid-template-columns: 1fr; }
+      .cards3 { grid-template-columns: 1fr; }
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#/" class="brand">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="pinGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#93C5FD" />
+              <stop offset="100%" stop-color="#2563EB" />
+            </linearGradient>
+            <linearGradient id="heartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="100%" stop-color="#E2E8F0" />
+            </linearGradient>
+          </defs>
+          <path d="M32 60c10-12.1 21-24.9 21-37.5C53 10.7 43.2 3 32 3S11 10.7 11 22.5C11 35.1 22 47.9 32 60Z" fill="url(#pinGrad)"/>
+          <circle cx="32" cy="24" r="15.5" fill="#2563EB" opacity="0.95"/>
+          <path d="M32 32.7c-4.2-2.7-9.8-6.7-9.8-11.8 0-3.3 2.5-5.9 5.7-5.9 1.8 0 3.2.8 4.1 2.2.9-1.4 2.3-2.2 4.1-2.2 3.2 0 5.7 2.6 5.7 5.9 0 5.1-5.6 9.1-9.8 11.8Z" fill="url(#heartGrad)"/>
+        </svg>
         <div>
-          <div className="text-sm font-semibold text-slate-900">{title}</div>
-          <div className="mt-1 text-sm leading-6 text-slate-600">{text}</div>
+          <div class="brand-title">NaniNavi</div>
+          <div class="brand-sub">Preset maps for seniors</div>
         </div>
-      </div>
+      </a>
+      <nav class="nav">
+        <a href="#/">Home</a>
+        <a href="#/how-it-works">How It Works</a>
+        <a href="#/for-caregivers">For Caregivers</a>
+        <a href="#/resources">Resources</a>
+        <a href="#/support">Support</a>
+      </nav>
+      <a href="https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523" class="btn">App Store</a>
     </div>
-  );
-}
+  </header>
 
-function DestinationButton({ label, sublabel, iconSrc }) {
-  return (
-    <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4 shadow-sm">
-      <div className="flex items-center gap-4">
-        <div className="h-14 w-14 overflow-hidden rounded-2xl bg-white p-1 shadow-sm">
-          <img src={iconSrc} alt={`${label} destination icon`} className="h-full w-full object-contain" />
-        </div>
-        <div>
-          <div className="text-lg font-semibold text-slate-900">{label}</div>
-          <div className="mt-1 text-sm leading-6 text-slate-500">{sublabel}</div>
-        </div>
-      </div>
-      <div className="rounded-full bg-white p-3 text-blue-700 shadow-sm">
-        <Icon name="navigation" className="h-5 w-5" />
-      </div>
-    </div>
-  );
-}
+  <main id="app"></main>
 
-function ScreenshotCard({ title, subtitle, children, accent = 'blue' }) {
-  const accentClass = accent === 'blue' ? 'from-blue-50 to-white border-blue-100' : 'from-slate-50 to-white border-slate-100';
-  return (
-    <div className={`rounded-[2rem] border bg-gradient-to-b ${accentClass} p-4 shadow-xl`}>
-      <div className="mb-4 flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">NaniNavi</div>
-          <div className="text-sm font-medium text-slate-600">{subtitle}</div>
-        </div>
-        <BrandMark className="h-8 w-8" small />
-      </div>
-      <div className="rounded-[1.6rem] bg-white p-4 shadow-inner">
-        {children}
-      </div>
-      <div className="mt-4 text-sm font-semibold text-slate-900">{title}</div>
-    </div>
-  );
-}
+  <script>
+    const appStoreUrl = 'https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523';
+    const supportEmail = 'support@naninavi.com';
+    const assets = {
+      destinationHome: '/images/home_icon_new.png',
+      destinationChurch: '/images/church_icon_new.png',
+      destinationDoctor: '/images/doctor_icon_new.png',
+      destinationGas: '/images/gas_icon_new.png',
+      destinationPark: '/images/park_icon_new.png',
+      destinationRestaurant: '/images/restaurant_icon_new.png',
+      lifestyleSenior: '/images/elderly_man2.png',
+      lifestyleCaregiverDad: '/images/woman_with_dad.png',
+      lifestyleCaregiverPhone: '/images/caregiver_phone.png',
+      lifestyleSonDad: '/images/son_dad.png',
+      homeButton: '/images/home_button.png'
+    };
 
-function HeroScreens() {
-  return (
-    <div className="relative mx-auto max-w-[620px]">
-      <div className="grid gap-5 lg:grid-cols-[0.96fr_0.88fr]">
-        <ScreenshotCard title="Preset caregiver destinations" subtitle="Clear, familiar places">
-          <div className="space-y-3">
-            <DestinationButton label="Home" sublabel="Large, easy-to-use navigation button" iconSrc={assets.destinationHome} />
-            <DestinationButton label="Doctor" sublabel="Trusted destination set by caregiver" iconSrc={assets.destinationDoctor} />
-            <DestinationButton label="Church" sublabel="Routine trip with less confusion" iconSrc={assets.destinationChurch} />
-            <DestinationButton label="Gas" sublabel="Useful stop on familiar routes" iconSrc={assets.destinationGas} />
+    const resources = [
+      {
+        slug: 'when-should-an-elderly-parent-stop-driving',
+        title: 'When Should an Elderly Parent Stop Driving?',
+        category: 'Driving & Safety',
+        description: 'A practical guide to the signs, risks, and next steps families can use when they are worried about an aging parent behind the wheel.',
+        summary: 'Many families wait too long because the conversation feels emotional. The best approach is to watch for patterns, not one isolated mistake, and to have a plan before a crisis happens.',
+        sections: [
+          {
+            heading: 'Common signs driving may no longer be safe',
+            body: [
+              'Watch for repeated close calls, new dents or scrapes, getting lost on familiar routes, slow reaction time, confusion at intersections, difficulty judging distance, or increased anxiety while driving.',
+              'Family members often notice subtle changes before the driver does. A pattern of concern matters more than one bad day.'
+            ],
+            bullets: [
+              'Missing turns or exits repeatedly',
+              'Trouble reading signs or reacting to traffic lights',
+              'New fear when driving at night, in rain, or in heavier traffic',
+              'Confusing the brake and gas pedals',
+              'Comments from neighbors, friends, or passengers about unsafe driving'
+            ]
+          },
+          {
+            heading: 'What families should do next',
+            body: [
+              'Start with observation, then move to a calm conversation. Focus on safety, not blame. If needed, involve a doctor, occupational therapist, or trusted third party.',
+              'Make the transition easier by preparing alternatives before asking your loved one to limit or stop driving.'
+            ],
+            bullets: [
+              'Track concerning incidents for a few weeks',
+              'Choose a calm time to talk',
+              'Offer rides, ride share help, family schedules, or preset navigation tools',
+              'Reduce driving gradually before eliminating it entirely when possible'
+            ]
+          }
+        ]
+      },
+      {
+        slug: 'signs-it-is-no-longer-safe-for-seniors-to-drive',
+        title: 'Signs It Is No Longer Safe for Seniors to Drive',
+        category: 'Driving & Safety',
+        description: 'Specific warning signs caregivers can watch for when trying to decide whether an older adult needs driving support or a transition plan.',
+        summary: 'Driving ability often changes gradually. Caregivers can reduce risk by learning the warning signs early and putting support in place before a dangerous event occurs.',
+        sections: [
+          {
+            heading: 'Physical and cognitive warning signs',
+            body: [
+              'Limited neck rotation, slower reaction time, reduced vision, medication side effects, memory issues, and difficulty processing multiple inputs all affect driving safety.',
+              'These changes do not always mean driving must stop immediately, but they do mean the family should evaluate risk seriously.'
+            ],
+            bullets: ['Difficulty backing up or checking blind spots', 'Delayed response to braking vehicles or pedestrians', 'Forgetting destinations mid-trip', 'Panic in situations they used to handle comfortably']
+          },
+          {
+            heading: 'Behavioral signs families often miss',
+            body: [
+              'Some older adults begin self limiting before the family notices. They may avoid night driving, highways, left turns, or unfamiliar areas. That can be an early sign they no longer feel confident.',
+              'Pay attention when a parent starts making excuses not to drive or becomes defensive whenever the subject comes up.'
+            ],
+            bullets: ['Driving only to a few highly familiar places', 'Refusing trips after dark', 'Unexplained damage to the car', 'Traffic tickets or near misses']
+          }
+        ]
+      },
+      {
+        slug: 'how-to-talk-to-your-parents-about-giving-up-driving',
+        title: 'How to Talk to Your Parents About Giving Up Driving',
+        category: 'Difficult Conversations',
+        description: 'A respectful framework for starting one of the hardest caregiver conversations without creating a fight or making your parent feel powerless.',
+        summary: 'This conversation usually goes better when families lead with empathy, examples, and alternatives. The goal is not to win an argument. The goal is to protect dignity and safety at the same time.',
+        sections: [
+          {
+            heading: 'Lead with empathy, not control',
+            body: [
+              'Driving is tied to independence, identity, and pride. A confrontational approach can backfire quickly. Start by acknowledging how hard the topic is and why it matters.',
+              'Use real observations instead of general criticism. Be specific and calm.'
+            ],
+            bullets: ['Pick a quiet, unhurried moment', 'Use “I’m concerned” instead of “You can’t”', 'Name specific incidents without exaggeration', 'Avoid shaming language or public confrontations']
+          },
+          {
+            heading: 'Offer a plan, not just a restriction',
+            body: [
+              'The conversation becomes less threatening when families can say what comes next. Transportation alternatives, family coordination, and simple tools can reduce fear.',
+              'For some families, preset destination tools are helpful because they preserve routine while also keeping caregivers informed.'
+            ],
+            bullets: ['Create a transportation backup list', 'Set up preset locations for safer trips', 'Coordinate who can help on which days', 'Review the plan together after a week or two']
+          }
+        ]
+      },
+      {
+        slug: 'alternatives-to-driving-for-seniors',
+        title: 'Alternatives to Driving for Seniors',
+        category: 'Transportation Options',
+        description: 'Transportation options families can use when an older adult should drive less or stop driving altogether.',
+        summary: 'Losing the ability to drive does not have to mean losing independence. The best transition plans combine family help, local transportation options, and routines that are easy to follow.',
+        sections: [
+          {
+            heading: 'Options families can combine',
+            body: [
+              'Many seniors do best with more than one transportation solution. Family rides may cover medical visits while community shuttles, church groups, neighbors, or ride share services fill the gaps.',
+              'What matters most is predictability. A clear plan reduces resistance and anxiety.'
+            ],
+            bullets: ['Family ride schedule', 'Senior transportation programs', 'Public transit with support', 'Ride share with preset destinations', 'Delivery services for groceries and prescriptions']
+          },
+          {
+            heading: 'How to make the transition easier',
+            body: [
+              'Write down the most common places your loved one goes each week and build a replacement plan around those routines first.',
+              'A tool like NaniNavi can help when a family member still drives certain familiar routes and you want a simpler, safer routine with caregiver visibility.'
+            ],
+            bullets: ['Start with church, doctor, pharmacy, and family homes', 'Reduce unnecessary trips with delivery services', 'Keep the plan visible and easy to follow', 'Make support feel normal, not punitive']
+          }
+        ]
+      },
+      {
+        slug: 'how-to-track-when-a-loved-one-arrives-safely',
+        title: 'How to Track When a Loved One Arrives Safely',
+        category: 'Caregiver Tools',
+        description: 'Simple ways caregivers can reduce stress by knowing when an aging parent or family member has started a trip and arrived safely.',
+        summary: 'For many families, the hardest part is not the trip itself. It is the uncertainty. Reliable updates can reduce caregiver stress and help older adults keep more independence.',
+        sections: [
+          {
+            heading: 'Why arrival visibility matters',
+            body: [
+              'Caregivers often worry silently: Did they leave? Did they get confused? Did they arrive? Even a short trip can create stress when there is no update.',
+              'A simple routine that confirms when a trip begins and ends can be enough to make everyday transportation feel manageable.'
+            ],
+            bullets: ['Reduces uncertainty for caregivers', 'Supports independence without constant calls', 'Creates a repeatable trip routine', 'Helps families notice changes over time']
+          },
+          {
+            heading: 'What to look for in a tool',
+            body: [
+              'Families usually need simplicity more than complexity. The best solutions are clear, predictable, and easy for an older adult or a family driver to use consistently.',
+              'NaniNavi was designed around preset destinations, simple navigation, and caregiver awareness for the moments that matter most.'
+            ],
+            bullets: ['Large, easy to use destination buttons', 'Minimal setup for recurring places', 'Clear trip start and arrival workflow', 'Caregiver friendly notifications']
+          }
+        ]
+      }
+    ];
+
+    const routes = {
+      '/': renderHome,
+      '/how-it-works': renderHow,
+      '/for-caregivers': renderCaregivers,
+      '/resources': renderResources,
+      '/support': renderSupport,
+      '/privacy': renderPrivacy,
+    };
+
+    const app = document.getElementById('app');
+
+    function iconArrow() {
+      return '➜';
+    }
+
+    function cardDestination(label, sublabel, img) {
+      return `
+        <div class="dest-btn">
+          <div class="dest-left">
+            <div class="dest-iconbox"><img src="${img}" alt="${label} icon"></div>
+            <div>
+              <div style="font-weight:700; font-size:1.05rem">${label}</div>
+              <div class="subtle">${sublabel}</div>
+            </div>
           </div>
-        </ScreenshotCard>
+          <div class="nav-round">${iconArrow()}</div>
+        </div>`;
+    }
 
-        <div className="space-y-5">
-          <ScreenshotCard title="Trip updates for caregivers" subtitle="Peace of mind, not hovering" accent="slate">
-            <div className="space-y-3">
-              <TripNotification title="Trip Started" text="Grandpa Joe Joe has started a trip home." />
-              <TripNotification title="Arrived" text="Grandpa Joe Joe arrived home." />
-            </div>
-          </ScreenshotCard>
+    function articleList() {
+      return resources.slice(0, 4).map(item => `
+        <a class="resource-item" href="#/${item.slug}">
+          <div style="font-size:1rem; font-weight:700; color:#0f172a;">${item.title}</div>
+          <div style="margin-top:8px; color:#64748b; font-size:.92rem;">${item.category}</div>
+        </a>`).join('');
+    }
 
-          <div className="rounded-[2rem] border border-slate-100 bg-white p-5 shadow-xl">
-            <div className="text-2xl font-semibold text-slate-900">Preset Maps for Seniors</div>
-            <p className="mt-3 text-sm leading-7 text-slate-600">
-              Caregiver-focused navigation designed to bring peace of mind, confidence, and independence to seniors and their families.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {['Caregiver focused', 'Large buttons', 'Familiar destinations', 'Safe, predictable trips'].map((item) => (
-                <span key={item} className="rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700">{item}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute -left-4 top-10 hidden rounded-2xl border border-white/90 bg-white/95 p-4 shadow-xl xl:block">
-        <div className="text-sm font-semibold text-slate-900">Built for caregivers first</div>
-        <div className="mt-1 text-sm text-slate-600">Support without constant supervision</div>
-      </div>
-    </div>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(96,165,250,0.22),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(37,99,235,0.18),_transparent_28%),linear-gradient(180deg,_#f8fbff,_#ffffff)] pt-8">
-      <Container className="relative grid items-center gap-12 py-12 lg:grid-cols-[1fr_1.02fr] lg:gap-14 lg:py-18">
-        <FadeIn>
-          <Badge>Two simple experiences: caregiver + driver</Badge>
-
-          <h1 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.65rem] lg:leading-[1.02]">
-            Safer, simpler driving for seniors with peace of mind for caregivers.
-          </h1>
-
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
-            Caregivers set up familiar destinations once. Drivers tap large, simple buttons to go. Get notified when trips start and end with no constant checking required.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <AppStoreBadge />
-            <a href="#/how-it-works" className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-800 shadow-sm transition hover:border-blue-200 hover:text-blue-700">
-              See how it works
-            </a>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-600">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
-              <Icon name="check" className="h-4 w-4 text-blue-700" />
-              Caregiver sets destinations
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
-              <Icon name="check" className="h-4 w-4 text-blue-700" />
-              Driver taps large buttons
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
-              <Icon name="check" className="h-4 w-4 text-blue-700" />
-              Notifications when trips start and end
-            </div>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            <div className="absolute -z-10 h-40 w-40 rounded-full bg-blue-200 blur-3xl opacity-30"></div>
-            {[
-              ['Two-role design', 'Separate caregiver setup and driver experience for clarity and simplicity.'],
-              ['No confusion', 'Large buttons replace searching, typing, and complex map apps.'],
-              ['Peace of mind', 'Know when a trip starts and ends without constant calls or tracking.'],
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-2xl border border-white bg-white/90 p-4 shadow-sm backdrop-blur">
-                <div className="text-sm font-semibold text-slate-900">{title}</div>
-                <div className="mt-2 text-sm leading-6 text-slate-600">{text}</div>
+    function renderHome() {
+      return `
+        <section class="hero">
+          <div class="container hero-grid">
+            <div>
+              <div class="badge">
+                <span>📍</span>
+                <span>Two simple experiences: caregiver + driver</span>
               </div>
-            ))}
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={100}>
-          <HeroScreens />
-        </FadeIn>
-      </Container>
-    </section>
-  );
-}
-
-function TrustBar() {
-  return (
-    <section className="border-y border-blue-100 bg-blue-50 py-5">
-      <Container className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-blue-900 sm:text-base">
-        <span>Designed for caregivers</span>
-        <span className="hidden h-1 w-1 rounded-full bg-blue-300 sm:block" />
-        <span>Built for simplicity</span>
-        <span className="hidden h-1 w-1 rounded-full bg-blue-300 sm:block" />
-        <span>Focused on safety</span>
-        <span className="hidden h-1 w-1 rounded-full bg-blue-300 sm:block" />
-        <span>Centered on independence</span>
-      </Container>
-    </section>
-  );
-}
-
-function FeatureCards() {
-  const items = [
-    {
-      iconSrc: assets.destinationHome,
-      title: 'Simple destination buttons',
-      text: 'Caregivers define trusted places once so repeat trips feel clear, familiar, and easier to start.',
-    },
-    {
-      iconSrc: assets.destinationDoctor,
-      title: 'Less confusion, fewer steps',
-      text: 'The app is built around large buttons and routine trips instead of full map app complexity.',
-    },
-    {
-      iconSrc: assets.destinationChurch,
-      title: 'Know when they arrive',
-      text: 'Trip start and arrival updates reduce the silent uncertainty families feel while someone is on the road.',
-    },
-    {
-      iconSrc: assets.destinationPark,
-      title: 'Made for older adults and families',
-      text: 'The experience supports confidence, calm, and a respectful balance between safety and independence.',
-    },
-  ];
-
-  return (
-    <section className="bg-gradient-to-b from-blue-50 via-blue-100/40 to-white py-20">
-      <Container>
-        <SectionTitle
-          eyebrow="Built for real-life caregiver situations"
-          title="A calmer way to support senior driving"
-          text="NaniNavi was created for aging parents, grandparents, and loved ones who still value independence but benefit from gentle guidance."
-        />
-        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {items.map((item, i) => (
-            <FadeIn key={item.title} delay={i * 60}>
-              <div className="rounded-3xl border border-slate-100 bg-slate-50 p-7 shadow-sm">
-                <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm">
-                  <img src={item.iconSrc} alt="feature icon" className="h-12 w-12 object-contain" />
-                </div>
-                <h3 className="mt-6 text-xl font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{item.text}</p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function StepShot({ step, title, text, type }) {
-  return (
-    <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-      <div className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Step {step}</div>
-      <div className="mt-3 text-2xl font-semibold text-slate-900">{title}</div>
-      <p className="mt-3 text-base leading-8 text-slate-600">{text}</p>
-      <div className="mt-5 rounded-[1.5rem] border border-slate-100 bg-slate-50 p-4">
-        {type === 'destinations' ? (
-          <div className="space-y-2.5">
-            <DestinationButton label="Home" sublabel="Trusted destination" iconSrc={assets.destinationHome} />
-            <DestinationButton label="Doctor" sublabel="Routine visit" iconSrc={assets.destinationDoctor} />
-          </div>
-        ) : type === 'start' ? (
-          <div className="rounded-2xl bg-white p-3 shadow-sm">
-            <img src={'/images/home_button.png'} alt="Driver destination button UI" className="w-full rounded-2xl object-contain" />
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <TripNotification title="Trip Started" text="Your loved one has started a trip to the doctor." />
-            <TripNotification title="Arrived" text="They arrived safely at the destination." />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function DualPaths() {
-  return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-        <div className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Caregiver View</div>
-        <div className="mt-3 text-xl font-semibold text-slate-900">Set up trusted places</div>
-        <p className="mt-2 text-sm leading-7 text-slate-600">Caregivers create a simple list of familiar destinations once.</p>
-        <div className="mt-4 space-y-2">
-          <DestinationButton label="Home" sublabel="123 Main St" iconSrc={assets.destinationHome} />
-          <DestinationButton label="Doctor" sublabel="Routine visit" iconSrc={assets.destinationDoctor} />
-          <DestinationButton label="Church" sublabel="Weekly trip" iconSrc={assets.destinationChurch} />
-        </div>
-      </div>
-
-      <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-        <div className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Driver View</div>
-        <div className="mt-3 text-xl font-semibold text-slate-900">Tap and go</div>
-        <p className="mt-2 text-sm leading-7 text-slate-600">Drivers see large, simple buttons with no searching and no confusion.</p>
-        <div className="mt-4 rounded-2xl bg-white p-3 shadow-sm">
-          <img src={'/images/home_button.png'} alt="Driver destination button UI" className="w-full rounded-2xl object-contain" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HowItWorksPreview() {
-  return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-20">
-      <Container>
-        <SectionTitle
-          eyebrow="How it works"
-          title="Two simple experiences, working together"
-          text="NaniNavi is designed with two distinct paths, one for caregivers and one for drivers. Each has a different UI built for their role."
-        />
-
-        <div className="mt-12">
-          <DualPaths />
-        </div>
-
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          <StepShot step="1" title="Caregiver sets destinations" text="Create a list of familiar places ahead of time." type="destinations" />
-          <StepShot step="2" title="Driver taps to go" text="Large buttons make starting a trip simple and predictable." type="start" />
-          <StepShot step="3" title="Caregiver gets updates" text="Know when a trip starts and when they arrive." type="notify" />
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function EmotionalSection() {
-  return (
-    <section className="bg-gradient-to-b from-blue-50 via-blue-100/40 to-white py-20">
-      <Container className="grid items-center gap-10 lg:grid-cols-[1fr_0.95fr]">
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">Why families choose NaniNavi</div>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Peace of mind without taking away independence.
-          </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-            Being a caregiver means worrying, especially when the people you love are behind the wheel. NaniNavi helps families support older drivers in a way that feels human, not restrictive.
-          </p>
-          <div className="mt-8 space-y-4">
-            {[
-              'Reduce anxiety around getting lost or taking wrong turns.',
-              'Support independence without constant supervision.',
-              'Create more confidence for senior drivers and less worry for caregivers.',
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <div className="mt-1 rounded-full bg-blue-50 p-1 text-blue-700"><Icon name="check" className="h-4 w-4" /></div>
-                <div className="text-base leading-8 text-slate-700">{item}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="grid gap-5">
-          <div className="overflow-hidden rounded-[2rem] border border-blue-100 bg-white shadow-xl">
-            <img src={assets.lifestyleCaregiverDad} alt="Caregiver and older loved one looking at a phone together" className="w-full object-cover" />
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="overflow-hidden rounded-[2rem] border border-blue-100 bg-white shadow-xl">
-              <img src={assets.lifestyleCaregiverPhone} alt="Caregiver checking a phone at home" className="h-full w-full object-cover" />
-            </div>
-            <div className="overflow-hidden rounded-[2rem] border border-blue-100 bg-white shadow-xl">
-              <img src={assets.lifestyleSenior} alt="Older man smiling while using a phone" className="h-full w-full object-cover" />
-            </div>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function LifestyleSection() {
-  return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-20">
-      <Container className="grid items-center gap-10 lg:grid-cols-[0.95fr_1fr]">
-        <div className="overflow-hidden rounded-[2rem] border border-blue-100 bg-white shadow-xl">
-          <img src={assets.lifestyleSonDad} alt="Adult son standing with older father outdoors" className="w-full object-cover" />
-        </div>
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">For the people who matter most</div>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Familiar places made easier for seniors and their families.
-          </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-            NaniNavi is designed for real families navigating one of the most emotional transitions: wanting older loved ones to stay independent while also wanting them to stay safe.
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {[
-              ['Home', assets.destinationHome],
-              ['Church', assets.destinationChurch],
-              ['Doctor', assets.destinationDoctor],
-              ['Gas', assets.destinationGas],
-              ['Park', assets.destinationPark],
-              ['Restaurant', assets.destinationRestaurant],
-            ].map(([label, src]) => (
-              <div key={label} className="rounded-2xl bg-white p-4 text-center shadow-sm">
-                <div className="mx-auto h-20 w-20">
-                  <img src={src} alt={`${label} watercolor destination icon`} className="h-full w-full object-contain" />
-                </div>
-                <div className="mt-3 text-sm font-medium text-slate-700">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function SeoPreview() {
-  return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-20">
-      <Container className="grid items-start gap-10 lg:grid-cols-[1fr_0.95fr]">
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">Resource center</div>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Practical help for caregivers searching for answers.
-          </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-            If you are worried about a parent or loved one driving, these guides walk you through what to look for, how to start the conversation, and what to do next.
-          </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {resources.slice(0, 4).map((item) => (
-              <a
-                key={item.slug}
-                href={`#/${item.slug}`}
-                className="block rounded-2xl border border-blue-100 bg-white p-5 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50"
-              >
-                <div className="text-base font-semibold text-slate-900">{item.title}</div>
-                <div className="mt-2 text-sm text-slate-600">{item.category}</div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function CTA() {
-  return (
-    <section className="py-24 text-white" style={{ backgroundColor: '#516989' }}>
-      <Container className="text-center">
-        <div className="mx-auto max-w-3xl">
-          <div className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-50">NaniNavi</div>
-          <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            Help your loved one stay independent while staying safe.
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-blue-50">
-            Set up familiar destinations, simplify every trip, and know when they arrive. NaniNavi gives caregivers peace of mind without taking control away.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <AppStoreBadge />
-            <a href="#/resources" className="inline-flex items-center justify-center rounded-2xl border border-white/30 bg-white/10 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/20">
-              Explore caregiver resources
-            </a>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-slate-200 bg-white py-10">
-      <Container className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-3">
-          <BrandMark className="h-10 w-10" small />
-          <div>
-            <div className="text-xl font-bold text-slate-900">NaniNavi</div>
-            <div className="mt-1 max-w-xl text-sm leading-7 text-slate-600">Preset maps for seniors. Peace of mind for caregivers.</div>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-600">
-          <a href="#/">Home</a>
-          <a href="#/how-it-works">How It Works</a>
-          <a href="#/for-caregivers">For Caregivers</a>
-          <a href="#/resources">Resources</a>
-          <a href="#/support">Support</a>
-          <a href="#/privacy">Privacy</a>
-        </div>
-      </Container>
-    </footer>
-  );
-}
-
-function HomePage() {
-  return (
-    <>
-      <Hero />
-      <TrustBar />
-      <FeatureCards />
-      <HowItWorksPreview />
-      <EmotionalSection />
-      <LifestyleSection />
-      <SeoPreview />
-      <CTA />
-    </>
-  );
-}
-
-function SimpleHero({ eyebrow, title, text }) {
-  return (
-    <section className="bg-[linear-gradient(180deg,#f8fcff,#ffffff)] py-20">
-      <Container>
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">{eyebrow}</div>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
-          <p className="mt-6 text-lg leading-8 text-slate-600">{text}</p>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-function HowPage() {
-  return (
-    <>
-      <SimpleHero
-        eyebrow="How It Works"
-        title="Two roles. Two experiences. One simple system."
-        text="NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need."
-      />
-
-      <section className="bg-white pb-12">
-        <Container>
-          <DualPaths />
-        </Container>
-      </section>
-
-      <section className="bg-white pb-20">
-        <Container className="grid gap-6 lg:grid-cols-3">
-          <StepShot step="1" title="Caregiver creates destinations" text="Set up places your loved one goes often." type="destinations" />
-          <StepShot step="2" title="Driver taps a destination" text="No typing or searching, just tap a familiar place." type="start" />
-          <StepShot step="3" title="Caregiver receives updates" text="Get notified when trips start and end." type="notify" />
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function CaregiversPage() {
-  return (
-    <>
-      <SimpleHero
-        eyebrow="For Caregivers"
-        title="Support independence without feeling completely in the dark"
-        text="Families often want a middle ground between doing nothing and taking the keys away. NaniNavi is designed for that in-between stage where simplicity and reassurance matter most."
-      />
-      <section className="bg-white pb-20">
-        <Container className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-6">
-            {[
-              ['Reduce uncertainty', 'Know when a trip begins and when your loved one arrives.'],
-              ['Support routine and familiarity', 'Preset common destinations so repeat trips feel easier and more consistent.'],
-              ['Create a simpler driving plan', 'Build a safer routine around the places your loved one actually goes.'],
-              ['Use it as part of a larger transition', 'NaniNavi can support the period when families are evaluating whether an older adult should keep driving.'],
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-3xl border border-slate-100 p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-slate-900">{title}</h2>
-                <p className="mt-3 text-base leading-8 text-slate-600">{text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="rounded-[2rem] bg-slate-50 p-8 shadow-sm ring-1 ring-slate-100">
-            <h3 className="text-2xl font-semibold text-slate-900">Who this is for</h3>
-            <div className="mt-6 space-y-4">
-              {[
-                'Adult children helping aging parents with routine driving',
-                'Families concerned about confusion or safety during familiar trips',
-                'Caregivers who want visibility without constant check-in calls',
-                'Family drivers helping transport an older adult to regular destinations',
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-2xl bg-white p-4">
-                  <Icon name="check" className="mt-0.5 h-5 w-5 text-blue-700" />
-                  <div className="text-sm leading-7 text-slate-700">{item}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function ResourceCard({ resource }) {
-  return (
-    <a href={`#/${resource.slug}`} className="group block rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg">
-      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">{resource.category}</div>
-      <h3 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 group-hover:text-blue-800">{resource.title}</h3>
-      <p className="mt-4 text-base leading-8 text-slate-600">{resource.description}</p>
-      <div className="mt-6 inline-flex items-center text-sm font-semibold text-blue-700">
-        Read article
-        <Icon name="chevronRight" className="ml-1 h-4 w-4" />
-      </div>
-    </a>
-  );
-}
-
-function ResourcesPage() {
-  return (
-    <>
-      <SimpleHero
-        eyebrow="Resources"
-        title="Senior driving, caregiver guidance, and family support resources"
-        text="This section is designed to answer the questions families actually search for when they are worried about an aging parent and driving."
-      />
-      <section className="bg-white pb-20">
-        <Container>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {resources.map((resource) => (
-              <ResourceCard key={resource.slug} resource={resource} />
-            ))}
-          </div>
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function ResourcePage({ resource }) {
-  return (
-    <>
-      <section className="bg-[linear-gradient(180deg,#f8fcff,#ffffff)] py-16">
-        <Container>
-          <div className="mx-auto max-w-4xl">
-            <a href="#/resources" className="inline-flex items-center text-sm font-semibold text-blue-700">
-              <span className="mr-1 inline-flex rotate-180"><Icon name="chevronRight" className="h-4 w-4" /></span>
-              Back to resources
-            </a>
-            <div className="mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">{resource.category}</div>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">{resource.title}</h1>
-            <p className="mt-6 text-lg leading-8 text-slate-600">{resource.summary}</p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-white pb-20">
-        <Container className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <article className="mx-auto w-full max-w-4xl space-y-10">
-            {resource.sections.map((section) => (
-              <div key={section.heading} className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">{section.heading}</h2>
-                <div className="mt-5 space-y-5">
-                  {section.body.map((paragraph, idx) => (
-                    <p key={idx} className="text-base leading-8 text-slate-700">{paragraph}</p>
-                  ))}
-                </div>
-                {section.bullets?.length ? (
-                  <ul className="mt-6 space-y-3">
-                    {section.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-start gap-3 text-base leading-7 text-slate-700">
-                        <Icon name="check" className="mt-1 h-5 w-5 shrink-0 text-blue-700" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            ))}
-
-            <div className="rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-300">Where NaniNavi fits</div>
-              <h2 className="mt-3 text-2xl font-semibold">A practical tool for families managing familiar senior trips</h2>
-              <p className="mt-4 text-base leading-8 text-slate-300">
-                NaniNavi is built for families who want a simpler routine around common destinations and caregiver awareness when a trip starts and ends.
-              </p>
-              <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-                <a href={appStoreUrl} className="inline-flex items-center justify-center rounded-2xl bg-blue-500 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-400">
-                  View on App Store
+              <h1>Safer, simpler driving for seniors with peace of mind for caregivers.</h1>
+              <p class="lead">Caregivers set up familiar destinations once. Drivers tap large, simple buttons to go. Get notified when trips start and end with no constant checking required.</p>
+              <div class="cta-row">
+                <a class="app-badge" href="${appStoreUrl}">
+                  <span style="font-size:1.3rem"></span>
+                  <span><small>Download on the</small>App Store</span>
                 </a>
-                <a href="#/for-caregivers" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
-                  Learn how it helps caregivers
-                </a>
+                <a class="btn" href="#/how-it-works">See how it works</a>
+              </div>
+              <div class="chip-row">
+                <div class="chip">✓ Caregiver sets destinations</div>
+                <div class="chip">✓ Driver taps large buttons</div>
+                <div class="chip">✓ Notifications when trips start and end</div>
+              </div>
+              <div class="cards3">
+                <div class="info-card"><h3>Two-role design</h3><p>Separate caregiver setup and driver experience for clarity and simplicity.</p></div>
+                <div class="info-card"><h3>No confusion</h3><p>Large buttons replace searching, typing, and complex map apps.</p></div>
+                <div class="info-card"><h3>Peace of mind</h3><p>Know when a trip starts and ends without constant calls or tracking.</p></div>
               </div>
             </div>
-          </article>
-
-          <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6 shadow-sm">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">On this page</div>
-              <div className="mt-4 space-y-3">
-                {resource.sections.map((section) => (
-                  <div key={section.heading} className="text-sm leading-7 text-slate-700">{section.heading}</div>
-                ))}
+            <div class="hero-side">
+              <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe;">
+                <div class="card-head"><div><div class="kicker">NaniNavi</div><div class="subtle">Clear, familiar places</div></div></div>
+                <div class="inner">
+                  ${cardDestination('Home', 'Large, easy to use navigation button', assets.destinationHome)}
+                  ${cardDestination('Doctor', 'Trusted destination set by caregiver', assets.destinationDoctor)}
+                  ${cardDestination('Church', 'Routine trip with less confusion', assets.destinationChurch)}
+                  ${cardDestination('Gas', 'Useful stop on familiar routes', assets.destinationGas)}
+                </div>
+                <div style="margin-top:14px; font-weight:700;">Preset caregiver destinations</div>
+              </div>
+              <div>
+                <div class="card" style="background:linear-gradient(180deg,#f8fafc,#fff);">
+                  <div class="card-head"><div><div class="kicker">NaniNavi</div><div class="subtle">Peace of mind, not hovering</div></div></div>
+                  <div class="inner">
+                    <div class="notif"><div class="notif-row"><div class="dest-iconbox" style="width:40px;height:40px"><img src="${assets.destinationHome}" alt="logo"></div><div><div style="font-weight:700">Trip Started</div><div class="subtle">Grandpa Joe Joe has started a trip home.</div></div></div></div>
+                    <div class="notif"><div class="notif-row"><div class="dest-iconbox" style="width:40px;height:40px"><img src="${assets.destinationHome}" alt="logo"></div><div><div style="font-weight:700">Arrived</div><div class="subtle">Grandpa Joe Joe arrived home.</div></div></div></div>
+                  </div>
+                  <div style="margin-top:14px; font-weight:700;">Trip updates for caregivers</div>
+                </div>
+                <div class="card soft-block" style="margin-top:18px;">
+                  <div style="font-size:1.5rem; font-weight:800;">Preset Maps for Seniors</div>
+                  <p class="subtle" style="margin:10px 0 0;">Caregiver focused navigation designed to bring peace of mind, confidence, and independence to seniors and their families.</p>
+                  <div class="soft-tags">
+                    <span>Caregiver focused</span><span>Large buttons</span><span>Familiar destinations</span><span>Safe, predictable trips</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-              <div className="text-lg font-semibold text-slate-900">More caregiver resources</div>
-              <div className="mt-4 space-y-4">
-                {resources.filter((r) => r.slug !== resource.slug).slice(0, 3).map((r) => (
-                  <a key={r.slug} href={`#/${r.slug}`} className="block rounded-2xl bg-slate-50 p-4 transition hover:bg-blue-50">
-                    <div className="text-sm font-medium text-slate-900">{r.title}</div>
-                    <div className="mt-1 text-sm leading-6 text-slate-600">{r.category}</div>
-                  </a>
-                ))}
+          </div>
+        </section>
+
+        <section class="trust"><div class="container trust-row"><span>Designed for caregivers</span><span>•</span><span>Built for simplicity</span><span>•</span><span>Focused on safety</span><span>•</span><span>Centered on independence</span></div></section>
+
+        <section class="blue-section">
+          <div class="container">
+            <div class="title-block">
+              <div class="eyebrow">Built for real-life caregiver situations</div>
+              <h2>A calmer way to support senior driving</h2>
+              <p>NaniNavi was created for aging parents, grandparents, and loved ones who still value independence but benefit from gentle guidance.</p>
+            </div>
+            <div class="grid-4">
+              ${[
+                [assets.destinationHome, 'Simple destination buttons', 'Caregivers define trusted places once so repeat trips feel clear, familiar, and easier to start.'],
+                [assets.destinationDoctor, 'Less confusion, fewer steps', 'The app is built around large buttons and routine trips instead of full map app complexity.'],
+                [assets.destinationChurch, 'Know when they arrive', 'Trip start and arrival updates reduce the silent uncertainty families feel while someone is on the road.'],
+                [assets.destinationPark, 'Made for older adults and families', 'The experience supports confidence, calm, and a respectful balance between safety and independence.']
+              ].map(([img, title, text]) => `
+                <div class="white-card">
+                  <div class="icon-wrap"><img src="${img}" alt="${title}"></div>
+                  <h3>${title}</h3>
+                  <p>${text}</p>
+                </div>`).join('')}
+            </div>
+          </div>
+        </section>
+
+        <section class="blue-section">
+          <div class="container">
+            <div class="title-block">
+              <div class="eyebrow">How it works</div>
+              <h2>Two simple experiences, working together</h2>
+              <p>NaniNavi is designed with two distinct paths, one for caregivers and one for drivers. Each has a different UI built for their role.</p>
+            </div>
+            <div class="dual-grid">
+              <div class="white-card">
+                <div class="eyebrow">Caregiver View</div>
+                <h3 style="margin-top:10px; font-size:1.3rem">Set up trusted places</h3>
+                <p>Caregivers create a simple list of familiar destinations once.</p>
+                ${cardDestination('Home', '123 Main St', assets.destinationHome)}
+                ${cardDestination('Doctor', 'Routine visit', assets.destinationDoctor)}
+                ${cardDestination('Church', 'Weekly trip', assets.destinationChurch)}
+              </div>
+              <div class="white-card">
+                <div class="eyebrow">Driver View</div>
+                <h3 style="margin-top:10px; font-size:1.3rem">Tap and go</h3>
+                <p>Drivers see large, simple buttons with no searching and no confusion.</p>
+                <div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div>
               </div>
             </div>
-          </aside>
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function SupportPage() {
-  return (
-    <>
-      <SimpleHero eyebrow="Support" title="Need help with NaniNavi?" text="For product questions, support requests, or launch inquiries, reach out using the details below." />
-      <section className="bg-white pb-20">
-        <Container className="grid gap-6 md:grid-cols-3">
-          {[
-            { icon: <Icon name="phone" className="h-6 w-6" />, title: 'Contact', text: supportEmail },
-            { icon: <Icon name="clock" className="h-6 w-6" />, title: 'Response time', text: 'Typically within 1–2 business days' },
-            { icon: <Icon name="file" className="h-6 w-6" />, title: 'Help topics', text: 'App setup, caregiver use, trip notifications, and launch questions' },
-          ].map((item) => (
-            <div key={item.title} className="rounded-3xl border border-slate-100 bg-slate-50 p-8 shadow-sm">
-              <div className="inline-flex rounded-2xl bg-white p-4 text-blue-700 shadow-sm">{item.icon}</div>
-              <h2 className="mt-6 text-2xl font-semibold text-slate-900">{item.title}</h2>
-              <p className="mt-3 text-base leading-8 text-slate-600">{item.text}</p>
-            </div>
-          ))}
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function PrivacyPage() {
-  return (
-    <>
-      <SimpleHero eyebrow="Privacy" title="Privacy-first by design" text="Replace this section with your final privacy policy. This starter page gives you a clean placeholder for launch and future updates." />
-      <section className="bg-white pb-20">
-        <Container className="mx-auto max-w-4xl">
-          <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-            <div className="space-y-6 text-base leading-8 text-slate-700">
-              <p>NaniNavi is committed to protecting user information and designing experiences that are simple, respectful, and appropriate for families supporting older adults.</p>
-              <p>This placeholder should be replaced with your full legal privacy policy covering data collection, notifications, account handling, analytics, and support contact information.</p>
-              <p>Recommended launch sections include what information is collected, how it is used, how notifications work, data retention, third-party services, and how users can contact you with questions.</p>
+            <div class="step-grid">
+              <div class="white-card step-card"><div class="eyebrow">Step 1</div><h3>Caregiver sets destinations</h3><p>Create a list of familiar places ahead of time.</p></div>
+              <div class="white-card step-card"><div class="eyebrow">Step 2</div><h3>Driver taps to go</h3><p>Large buttons make starting a trip simple and predictable.</p></div>
+              <div class="white-card step-card"><div class="eyebrow">Step 3</div><h3>Caregiver gets updates</h3><p>Know when a trip starts and when they arrive.</p></div>
             </div>
           </div>
-        </Container>
-      </section>
-    </>
-  );
-}
+        </section>
 
-function Header() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur">
-      <Container className="flex items-center justify-between py-4">
-        <a href="#/" className="flex items-center gap-3">
-          <BrandMark className="h-11 w-11" small />
-          <div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900">NaniNavi</div>
-            <div className="-mt-0.5 text-xs font-medium uppercase tracking-[0.18em] text-blue-700">Preset maps for seniors</div>
-          </div>
-        </a>
-
-        <nav className="hidden items-center gap-8 lg:flex">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/how-it-works">How It Works</NavLink>
-          <NavLink href="/for-caregivers">For Caregivers</NavLink>
-          <NavLink href="/resources">Resources</NavLink>
-          <NavLink href="/support">Support</NavLink>
-        </nav>
-
-        <div className="hidden lg:block">
-          <a href={appStoreUrl} className="inline-flex items-center justify-center rounded-2xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800">
-            App Store
-          </a>
-        </div>
-
-        <button onClick={() => setOpen((value) => !value)} className="inline-flex rounded-2xl border border-slate-200 p-3 text-slate-700 lg:hidden" aria-label="Toggle navigation menu">
-          {open ? <Icon name="x" className="h-5 w-5" /> : <Icon name="menu" className="h-5 w-5" />}
-        </button>
-      </Container>
-
-      {open ? (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
-          <Container className="py-4">
-            <div className="space-y-1">
-              <NavLink href="/" onClick={() => setOpen(false)} mobile>Home</NavLink>
-              <NavLink href="/how-it-works" onClick={() => setOpen(false)} mobile>How It Works</NavLink>
-              <NavLink href="/for-caregivers" onClick={() => setOpen(false)} mobile>For Caregivers</NavLink>
-              <NavLink href="/resources" onClick={() => setOpen(false)} mobile>Resources</NavLink>
-              <NavLink href="/support" onClick={() => setOpen(false)} mobile>Support</NavLink>
-              <NavLink href="/privacy" onClick={() => setOpen(false)} mobile>Privacy</NavLink>
+        <section class="blue-section">
+          <div class="container image-text">
+            <div>
+              <div class="eyebrow">Why families choose NaniNavi</div>
+              <h2>Peace of mind without taking away independence.</h2>
+              <p class="lead" style="font-size:1.08rem; max-width:none">Being a caregiver means worrying, especially when the people you love are behind the wheel. NaniNavi helps families support older drivers in a way that feels human, not restrictive.</p>
+              <div style="margin-top:24px; display:grid; gap:14px;">
+                <div class="chip">✓ Reduce anxiety around getting lost or taking wrong turns</div>
+                <div class="chip">✓ Support independence without constant supervision</div>
+                <div class="chip">✓ Create more confidence for senior drivers and less worry for caregivers</div>
+              </div>
             </div>
-          </Container>
-        </div>
-      ) : null}
-    </header>
-  );
-}
-
-export default function NaniNaviSite() {
-  const path = useRoute();
-
-  useEffect(() => {
-    runSanityChecks();
-  }, []);
-
-  useEffect(() => {
-    document.title = getSeoTitle(path);
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, [path]);
-
-  const page = useMemo(() => {
-    if (routes[path] === 'home') return <HomePage />;
-    if (routes[path] === 'how') return <HowPage />;
-    if (routes[path] === 'caregivers') return <CaregiversPage />;
-    if (routes[path] === 'resources') return <ResourcesPage />;
-    if (routes[path] === 'support') return <SupportPage />;
-    if (routes[path] === 'privacy') return <PrivacyPage />;
-
-    const resource = resources.find((item) => `/${item.slug}` === path);
-    if (resource) return <ResourcePage resource={resource} />;
-
-    return (
-      <section className="bg-white py-24">
-        <Container className="text-center">
-          <div className="mx-auto inline-flex rounded-2xl bg-amber-50 p-4 text-amber-700">
-            <Icon name="alert" className="h-6 w-6" />
+            <div class="image-collage">
+              <div class="image-shell"><img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together"></div>
+              <div class="row-2">
+                <div class="image-shell"><img src="${assets.lifestyleCaregiverPhone}" alt="Caregiver checking a phone at home"></div>
+                <div class="image-shell"><img src="${assets.lifestyleSenior}" alt="Older man smiling while using a phone"></div>
+              </div>
+            </div>
           </div>
-          <h1 className="mt-6 text-4xl font-bold text-slate-900">Page not found</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">The page you’re looking for does not exist yet. Use the navigation to return to the main site.</p>
-          <a href="#/" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-blue-700 px-6 py-4 text-base font-semibold text-white">Go home</a>
-        </Container>
-      </section>
-    );
-  }, [path]);
+        </section>
 
-  return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <Header />
-      <main>{page}</main>
-      <Footer />
-    </div>
-  );
-}
+        <section class="blue-section">
+          <div class="container image-text" style="grid-template-columns:.95fr 1fr;">
+            <div class="image-shell"><img src="${assets.lifestyleSonDad}" alt="Adult son standing with older father outdoors"></div>
+            <div>
+              <div class="eyebrow">For the people who matter most</div>
+              <h2>Familiar places made easier for seniors and their families.</h2>
+              <p class="lead" style="font-size:1.08rem; max-width:none">NaniNavi is designed for real families navigating one of the most emotional transitions: wanting older loved ones to stay independent while also wanting them to stay safe.</p>
+              <div class="icon-grid">
+                ${[
+                  ['Home', assets.destinationHome], ['Church', assets.destinationChurch], ['Doctor', assets.destinationDoctor], ['Gas', assets.destinationGas], ['Park', assets.destinationPark], ['Restaurant', assets.destinationRestaurant]
+                ].map(([label, img]) => `
+                  <div class="icon-card"><div class="img-wrap"><img src="${img}" alt="${label}"></div><div style="margin-top:8px; font-weight:700; color:#334155;">${label}</div></div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="blue-section">
+          <div class="container">
+            <div class="eyebrow">Resource center</div>
+            <h2>Practical help for caregivers searching for answers.</h2>
+            <p class="lead" style="font-size:1.08rem; max-width:760px">If you are worried about a parent or loved one driving, these guides walk you through what to look for, how to start the conversation, and what to do next.</p>
+            <div class="resource-grid">${articleList()}</div>
+          </div>
+        </section>
+
+        <section class="cta-final">
+          <div class="container">
+            <div class="eyebrow" style="color:#eff6ff">NaniNavi</div>
+            <h2>Help your loved one stay independent while staying safe.</h2>
+            <p>Set up familiar destinations, simplify every trip, and know when they arrive. NaniNavi gives caregivers peace of mind without taking control away.</p>
+            <div class="cta-row" style="justify-content:center; margin-top:32px;">
+              <a class="app-badge" href="${appStoreUrl}"><span style="font-size:1.3rem"></span><span><small>Download on the</small>App Store</span></a>
+              <a class="btn" href="#/resources" style="background:rgba(255,255,255,.08); color:white; border-color:rgba(255,255,255,.28);">Explore caregiver resources</a>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderHow() {
+      return `
+        <section class="hero"><div class="container title-block"><div class="eyebrow">How It Works</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Two roles. Two experiences. One simple system.</h1><p class="lead" style="margin-left:auto;margin-right:auto;">NaniNavi separates the caregiver setup experience from the driver experience so each person only sees what they need.</p></div></section>
+        <section style="padding-top:0"><div class="container"><div class="dual-grid"><div class="white-card"><div class="eyebrow">Caregiver View</div><h3 style="margin-top:10px">Set up trusted places</h3><p>Caregivers create a simple list of familiar destinations once.</p>${cardDestination('Home','123 Main St',assets.destinationHome)}${cardDestination('Doctor','Routine visit',assets.destinationDoctor)}${cardDestination('Church','Weekly trip',assets.destinationChurch)}</div><div class="white-card"><div class="eyebrow">Driver View</div><h3 style="margin-top:10px">Tap and go</h3><p>Drivers see large, simple buttons with no searching and no confusion.</p><div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div></div></div></div></section>
+      `;
+    }
+
+    function renderCaregivers() {
+      return `
+        <section class="hero"><div class="container title-block"><div class="eyebrow">For Caregivers</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Support independence without feeling completely in the dark</h1><p class="lead" style="margin-left:auto;margin-right:auto;">Families often want a middle ground between doing nothing and taking the keys away. NaniNavi is designed for that in-between stage where simplicity and reassurance matter most.</p></div></section>
+        <section style="padding-top:0"><div class="container dual-grid"><div style="display:grid; gap:18px;">${[
+          ['Reduce uncertainty', 'Know when a trip begins and when your loved one arrives.'],
+          ['Support routine and familiarity', 'Preset common destinations so repeat trips feel easier and more consistent.'],
+          ['Create a simpler driving plan', 'Build a safer routine around the places your loved one actually goes.'],
+          ['Use it as part of a larger transition', 'NaniNavi can support the period when families are evaluating whether an older adult should keep driving.']
+        ].map(([t,d]) => `<div class="white-card"><h3 style="margin:0">${t}</h3><p>${d}</p></div>`).join('')}</div><div class="white-card"><h3 style="margin:0">Who this is for</h3><div style="display:grid; gap:14px; margin-top:18px;">${[
+          'Adult children helping aging parents with routine driving',
+          'Families concerned about confusion or safety during familiar trips',
+          'Caregivers who want visibility without constant check in calls',
+          'Family drivers helping transport an older adult to regular destinations'
+        ].map(item => `<div class="chip">✓ ${item}</div>`).join('')}</div></div></div></section>`;
+    }
+
+    function renderResources() {
+      return `
+        <section class="hero"><div class="container title-block"><div class="eyebrow">Resources</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Senior driving, caregiver guidance, and family support resources</h1><p class="lead" style="margin-left:auto;margin-right:auto;">This section is designed to answer the questions families actually search for when they are worried about an aging parent and driving.</p></div></section>
+        <section style="padding-top:0"><div class="container resource-grid">${resources.map(item => `
+          <a class="resource-item" href="#/${item.slug}"><div class="eyebrow">${item.category}</div><div style="font-size:1.4rem; font-weight:800; color:#0f172a; margin-top:8px;">${item.title}</div><p style="color:#475569">${item.description}</p></a>`).join('')}</div></section>`;
+    }
+
+    function renderSupport() {
+      return `
+        <section class="hero"><div class="container title-block"><div class="eyebrow">Support</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Need help with NaniNavi?</h1><p class="lead" style="margin-left:auto;margin-right:auto;">For product questions, support requests, or launch inquiries, reach out using the details below.</p></div></section>
+        <section style="padding-top:0"><div class="container grid-4" style="grid-template-columns:repeat(3,1fr)"><div class="white-card"><h3>Contact</h3><p>${supportEmail}</p></div><div class="white-card"><h3>Response time</h3><p>Typically within 1 to 2 business days</p></div><div class="white-card"><h3>Help topics</h3><p>App setup, caregiver use, trip notifications, and launch questions</p></div></div></section>`;
+    }
+
+    function renderPrivacy() {
+      return `
+        <section class="hero"><div class="container title-block"><div class="eyebrow">Privacy</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Privacy-first by design</h1><p class="lead" style="margin-left:auto;margin-right:auto;">Replace this section with your final privacy policy. This starter page gives you a clean placeholder for launch and future updates.</p></div></section>
+        <section style="padding-top:0"><div class="container"><div class="white-card"><p>NaniNavi is committed to protecting user information and designing experiences that are simple, respectful, and appropriate for families supporting older adults.</p><p>This placeholder should be replaced with your full legal privacy policy covering data collection, notifications, account handling, analytics, and support contact information.</p><p>Recommended launch sections include what information is collected, how it is used, how notifications work, data retention, third party services, and how users can contact you with questions.</p></div></div></section>`;
+    }
+
+    function renderArticle(article) {
+      return `
+        <section class="hero"><div class="container"><div style="max-width:900px; margin:0 auto;"><a href="#/resources" class="eyebrow">Back to resources</a><div class="eyebrow" style="margin-top:20px">${article.category}</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">${article.title}</h1><p class="lead">${article.summary}</p></div></div></section>
+        <section style="padding-top:0"><div class="container" style="max-width:900px;">
+          ${article.sections.map(section => `
+            <div class="white-card" style="margin-bottom:24px;">
+              <h3 style="margin-top:0; font-size:1.7rem;">${section.heading}</h3>
+              ${section.body.map(p => `<p style="color:#334155">${p}</p>`).join('')}
+              <ul style="padding-left:20px; color:#334155;">
+                ${section.bullets.map(b => `<li style="margin:8px 0">${b}</li>`).join('')}
+              </ul>
+            </div>`).join('')}
+          <div class="white-card" style="background:#0f172a; color:white;">
+            <div class="eyebrow" style="color:#93c5fd">Where NaniNavi fits</div>
+            <h3>A practical tool for families managing familiar senior trips</h3>
+            <p style="color:#cbd5e1">NaniNavi is built for families who want a simpler routine around common destinations and caregiver awareness when a trip starts and ends.</p>
+            <div class="cta-row"><a class="btn" href="${appStoreUrl}" style="background:#3b82f6; color:white; border-color:#3b82f6">View on App Store</a><a class="btn" href="#/for-caregivers" style="background:rgba(255,255,255,.05); color:white; border-color:rgba(255,255,255,.15)">Learn how it helps caregivers</a></div>
+          </div>
+        </div></section>`;
+    }
+
+    function renderNotFound() {
+      return `<section class="hero"><div class="container title-block"><div class="eyebrow">Not found</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Page not found</h1><p class="lead" style="margin-left:auto;margin-right:auto;">The page you’re looking for does not exist yet. Use the navigation to return to the main site.</p><div class="cta-row" style="justify-content:center;"><a class="btn" href="#/">Go home</a></div></div></section>`;
+    }
+
+    function footer() {
+      return `
+        <footer class="footer">
+          <div class="container footer-row">
+            <div class="brand">
+              <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+                <use href="#"></use>
+                <defs>
+                  <linearGradient id="pinGradFooter" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#93C5FD" /><stop offset="100%" stop-color="#2563EB" /></linearGradient>
+                  <linearGradient id="heartGradFooter" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFFFFF" /><stop offset="100%" stop-color="#E2E8F0" /></linearGradient>
+                </defs>
+                <path d="M32 60c10-12.1 21-24.9 21-37.5C53 10.7 43.2 3 32 3S11 10.7 11 22.5C11 35.1 22 47.9 32 60Z" fill="url(#pinGradFooter)"/>
+                <circle cx="32" cy="24" r="15.5" fill="#2563EB" opacity="0.95"/>
+                <path d="M32 32.7c-4.2-2.7-9.8-6.7-9.8-11.8 0-3.3 2.5-5.9 5.7-5.9 1.8 0 3.2.8 4.1 2.2.9-1.4 2.3-2.2 4.1-2.2 3.2 0 5.7 2.6 5.7 5.9 0 5.1-5.6 9.1-9.8 11.8Z" fill="url(#heartGradFooter)"/>
+              </svg>
+              <div><div class="brand-title" style="font-size:1.2rem">NaniNavi</div><div style="color:#64748b; font-size:.92rem;">Preset maps for seniors. Peace of mind for caregivers.</div></div>
+            </div>
+            <div class="footer-links"><a href="#/">Home</a><a href="#/how-it-works">How It Works</a><a href="#/for-caregivers">For Caregivers</a><a href="#/resources">Resources</a><a href="#/support">Support</a><a href="#/privacy">Privacy</a></div>
+          </div>
+        </footer>`;
+    }
+
+    function render() {
+      const path = (location.hash || '#/').replace(/^#/, '') || '/';
+      document.title = 'NaniNavi | Senior driving support for caregivers';
+      if (routes[path]) {
+        app.innerHTML = routes[path]() + footer();
+      } else {
+        const article = resources.find(r => `/${r.slug}` === path);
+        app.innerHTML = article ? renderArticle(article) + footer() : renderNotFound() + footer();
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>
+
