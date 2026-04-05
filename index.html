@@ -199,6 +199,19 @@
     .image-collage { display: grid; gap: 18px; }
     .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
     .image-shell { overflow: hidden; border-radius: 32px; border: 1px solid var(--blue-100); background: white; box-shadow: var(--shadow); }
+
+    /* standard lifestyle sizing control */
+    .lifestyle-standard {
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+      .lifestyle-standard {
+        max-width: 80%;
+      }
+    }
     .image-shell.large-lifestyle {
       max-width: 100% !important;
       margin: 0 !important;
@@ -527,7 +540,7 @@
               </div>
             </div>
             <div class="hero-side">
-              <div class="image-shell" style="max-width:80%; margin-left:auto; margin-right:auto;">
+              <div class="image-shell lifestyle-standard">
                 <img src="${assets.lifestyleSonDad}" alt="Adult son standing with older father outdoors">
               </div>
 
@@ -606,7 +619,9 @@
               </div>
             </div>
             <div class="image-collage">
-              <div class="image-shell" style="max-width:80%; margin:0 auto;"><img src="${assets.lifestyleCaregiverPhone}" alt="Caregiver checking a phone at home"></div>
+              <div class="image-shell lifestyle-standard">
+              <img src="${assets.lifestyleCaregiverPhone}" alt="Caregiver checking a phone at home">
+            </div>
             </div>
           </div>
         </section>
@@ -616,7 +631,7 @@
             <div class="eyebrow">For the people who matter most</div>
             <h2>Familiar places made easier for seniors and their families.</h2>
             <p class="lead" style="font-size:1.08rem; max-width:760px">NaniNavi is designed for real families navigating one of the most emotional transitions: wanting older loved ones to stay independent while also wanting them to stay safe.</p>
-            <div class="image-shell" style="margin-top:28px; max-width:80%; margin-left:auto; margin-right:auto;">
+            <div class="image-shell lifestyle-standard" style="margin-top:28px;">
               <img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together">
             </div>
             <div class="icon-grid" style="margin-top:28px;">
@@ -777,6 +792,7 @@
   </script>
 </body>
 </html>
+
 
 
 
