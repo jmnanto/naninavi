@@ -83,7 +83,7 @@
     .info-card { padding: 18px; }
     .info-card h3 { margin: 0; font-size: 1rem; }
     .info-card p { margin: 8px 0 0; color: var(--muted); font-size: .94rem; }
-    .hero-side { display: grid; grid-template-columns: .96fr .88fr; gap: 18px; }
+    .hero-side { display: grid; grid-template-columns: 1fr; gap: 18px; }
     .card { padding: 16px; }
     .card-head { display: flex; align-items: center; justify-content: space-between; background: white; border-radius: 18px; padding: 12px 14px; box-shadow: 0 3px 12px rgba(15,23,42,.05); }
     .kicker { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); font-weight: 800; }
@@ -96,8 +96,8 @@
     .dest-left { display: flex; gap: 12px; align-items: center; }
     .dest-iconbox { width: 56px; height: 56px; background: white; border-radius: 18px; padding: 4px; box-shadow: 0 3px 10px rgba(15,23,42,.05); }
     .nav-round { width: 44px; height: 44px; border-radius: 999px; background: white; display: grid; place-items: center; box-shadow: 0 3px 10px rgba(15,23,42,.05); color: var(--blue-700); font-weight: 700; }
-    .notif { background: rgba(255,255,255,.95); border: 1px solid rgba(255,255,255,.9); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); margin-top: 10px; }
-    .notif-row { display: flex; gap: 12px; }
+    .notif { background: #f8fafc; border: 1px solid var(--border); border-radius: 18px; padding: 16px; box-shadow: 0 6px 18px rgba(15,23,42,.05); margin-top: 12px; }
+    .notif-row { display: flex; gap: 12px; align-items: flex-start; }
     .soft-block { padding: 18px; }
     .soft-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .soft-tags span { background: var(--blue-50); color: var(--blue-700); padding: 8px 10px; border-radius: 999px; font-weight: 600; font-size: .84rem; }
@@ -396,37 +396,40 @@
                 <div class="chip">✓ Driver taps large buttons</div>
                 <div class="chip">✓ Notifications when trips start and end</div>
               </div>
-              <div class="cards3">
-                <div class="info-card"><h3>Two-role design</h3><p>Separate caregiver setup and driver experience for clarity and simplicity.</p></div>
-                <div class="info-card"><h3>No confusion</h3><p>Large buttons replace searching, typing, and complex map apps.</p></div>
-                <div class="info-card"><h3>Peace of mind</h3><p>Know when a trip starts and ends without constant calls or tracking.</p></div>
-              </div>
             </div>
             <div class="hero-side">
               <div class="card" style="background:linear-gradient(180deg,#eff6ff,#fff); border-color:#dbeafe;">
-                <div class="card-head"><div><div class="kicker">NaniNavi</div><div class="subtle">Clear, familiar places</div></div></div>
+                <div style="font-size:1.35rem; font-weight:800;">Caregiver setup</div>
+                <p class="subtle" style="margin:8px 0 0;">Create familiar destinations once so every trip is easier for the driver.</p>
                 <div class="inner">
                   ${cardDestination('Home', 'Large, easy to use navigation button', assets.destinationHome)}
                   ${cardDestination('Doctor', 'Trusted destination set by caregiver', assets.destinationDoctor)}
                   ${cardDestination('Church', 'Routine trip with less confusion', assets.destinationChurch)}
-                  ${cardDestination('Gas', 'Useful stop on familiar routes', assets.destinationGas)}
                 </div>
-                <div style="margin-top:14px; font-weight:700;">Preset caregiver destinations</div>
               </div>
-              <div>
-                <div class="card" style="background:linear-gradient(180deg,#f8fafc,#fff);">
-                  <div class="card-head"><div><div class="kicker">NaniNavi</div><div class="subtle">Peace of mind, not hovering</div></div></div>
-                  <div class="inner">
-                    <div class="notif"><div class="notif-row"><div class="dest-iconbox" style="width:40px;height:40px"><img src="${assets.destinationHome}" alt="logo"></div><div><div style="font-weight:700">Trip Started</div><div class="subtle">Grandpa Joe Joe has started a trip home.</div></div></div></div>
-                    <div class="notif"><div class="notif-row"><div class="dest-iconbox" style="width:40px;height:40px"><img src="${assets.destinationHome}" alt="logo"></div><div><div style="font-weight:700">Arrived</div><div class="subtle">Grandpa Joe Joe arrived home.</div></div></div></div>
+
+              <div class="card" style="background:linear-gradient(180deg,#f8fafc,#fff);">
+                <div style="font-size:1.35rem; font-weight:800;">Driver view and caregiver updates</div>
+                <p class="subtle" style="margin:8px 0 0;">Drivers tap one large button to start. Caregivers receive simple updates when the trip begins and ends.</p>
+                <div class="image-shell" style="margin-top:16px;"><img src="${assets.homeButton}" alt="Driver destination button UI"></div>
+                <div style="margin-top:18px; display:grid; gap:12px;">
+                  <div class="notif">
+                    <div class="notif-row">
+                      <div class="dest-iconbox" style="width:42px;height:42px"><img src="${assets.destinationHome}" alt="home icon"></div>
+                      <div>
+                        <div style="font-weight:800; font-size:1rem;">Trip Started</div>
+                        <div class="subtle">Grandpa Joe Joe has started a trip home.</div>
+                      </div>
+                    </div>
                   </div>
-                  <div style="margin-top:14px; font-weight:700;">Trip updates for caregivers</div>
-                </div>
-                <div class="card soft-block" style="margin-top:18px;">
-                  <div style="font-size:1.5rem; font-weight:800;">Preset Maps for Seniors</div>
-                  <p class="subtle" style="margin:10px 0 0;">Caregiver focused navigation designed to bring peace of mind, confidence, and independence to seniors and their families.</p>
-                  <div class="soft-tags">
-                    <span>Caregiver focused</span><span>Large buttons</span><span>Familiar destinations</span><span>Safe, predictable trips</span>
+                  <div class="notif">
+                    <div class="notif-row">
+                      <div class="dest-iconbox" style="width:42px;height:42px"><img src="${assets.destinationHome}" alt="home icon"></div>
+                      <div>
+                        <div style="font-weight:800; font-size:1rem;">Arrived</div>
+                        <div class="subtle">Grandpa Joe Joe arrived home.</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -658,5 +661,6 @@
   </script>
 </body>
 </html>
+
 
 
