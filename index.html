@@ -627,18 +627,20 @@
         </section>
 
         <section class="blue-section">
-          <div class="container">
-            <div class="eyebrow">For the people who matter most</div>
-            <h2>Familiar places made easier for seniors and their families.</h2>
-            <p class="lead" style="font-size:1.08rem; max-width:760px">NaniNavi is designed for real families navigating one of the most emotional transitions: wanting older loved ones to stay independent while also wanting them to stay safe.</p>
-            <div class="image-shell lifestyle-standard" style="margin-top:28px;">
+          <div class="container image-text" style="grid-template-columns:.95fr 1fr;">
+            <div class="image-shell lifestyle-standard">
               <img src="${assets.lifestyleCaregiverDad}" alt="Caregiver and older loved one looking at a phone together">
             </div>
-            <div class="icon-grid" style="margin-top:28px;">
-              ${[
-                ['Home', assets.destinationHome], ['Church', assets.destinationChurch], ['Doctor', assets.destinationDoctor], ['Gas', assets.destinationGas], ['Park', assets.destinationPark], ['Restaurant', assets.destinationRestaurant]
-              ].map(([label, img]) => `
-                <div class="icon-card"><div class="img-wrap"><img src="${img}" alt="${label}"></div><div style="margin-top:8px; font-weight:700; color:#334155;">${label}</div></div>`).join('')}
+            <div>
+              <div class="eyebrow">For the people who matter most</div>
+              <h2>Familiar places made easier for seniors and their families.</h2>
+              <p class="lead" style="font-size:1.08rem; max-width:none">NaniNavi is designed for real families navigating one of the most emotional transitions: wanting older loved ones to stay independent while also wanting them to stay safe.</p>
+              <div class="icon-grid" style="margin-top:28px;">
+                ${[
+                  ['Home', assets.destinationHome], ['Church', assets.destinationChurch], ['Doctor', assets.destinationDoctor], ['Gas', assets.destinationGas], ['Park', assets.destinationPark], ['Restaurant', assets.destinationRestaurant]
+                ].map(([label, img]) => `
+                  <div class="icon-card"><div class="img-wrap"><img src="${img}" alt="${label}"></div><div style="margin-top:8px; font-weight:700; color:#334155;">${label}</div></div>`).join('')}
+              </div>
             </div>
           </div>
         </section>
@@ -792,6 +794,7 @@
   </script>
 </body>
 </html>
+
 
 
 
