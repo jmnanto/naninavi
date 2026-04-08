@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NaniNavi | Senior driving support for caregivers</title>
+  <meta name="description" content="NaniNavi is a preset navigator for seniors that helps caregivers set familiar destinations, simplify driving, and get peace of mind when trips begin and end.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://naninavi.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NaniNavi">
+  <meta property="og:title" content="NaniNavi | Senior driving support for caregivers">
+  <meta property="og:description" content="NaniNavi is a preset navigator for seniors that helps caregivers set familiar destinations, simplify driving, and get peace of mind when trips begin and end.">
+  <meta property="og:url" content="https://naninavi.com/">
+  <meta property="og:image" content="https://naninavi.com/images/favicon64.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NaniNavi | Senior driving support for caregivers">
+  <meta name="twitter:description" content="NaniNavi is a preset navigator for seniors that helps caregivers set familiar destinations, simplify driving, and get peace of mind when trips begin and end.">
+  <meta name="twitter:image" content="https://naninavi.com/images/favicon64.png">
   <link rel="icon" type="image/png" sizes="64x64" href="images/favicon64.png">
 
   <!-- Fonts -->
@@ -493,6 +506,33 @@
       }
     ];
 
+    const pageMeta = {
+      '/': {
+        title: 'NaniNavi | Senior driving support for caregivers',
+        description: 'NaniNavi is a preset navigator for seniors that helps caregivers set familiar destinations, simplify driving, and get peace of mind when trips begin and end.'
+      },
+      '/how-it-works': {
+        title: 'How NaniNavi Works | Two simple experiences for caregivers and drivers',
+        description: 'See how NaniNavi separates caregiver setup from the driver experience so familiar destinations are easier to navigate.'
+      },
+      '/for-caregivers': {
+        title: 'For Caregivers | NaniNavi',
+        description: 'Learn how NaniNavi helps caregivers support older drivers with preset destinations, simpler trips, and gentle peace of mind.'
+      },
+      '/resources': {
+        title: 'Resources for Caregivers and Senior Driving | NaniNavi',
+        description: 'Practical guidance for families who are worried about a parent or loved one driving, including conversations, safety signs, and next steps.'
+      },
+      '/support': {
+        title: 'Support | NaniNavi',
+        description: 'Get help with NaniNavi, including app setup, caregiver questions, trip notifications, and common FAQs.'
+      },
+      '/privacy': {
+        title: 'Privacy | NaniNavi',
+        description: 'Privacy information for NaniNavi and how the app handles information for caregivers and older adults.'
+      }
+    };
+
     const routes = {
       '/': renderHome,
       '/how-it-works': renderHow,
@@ -823,9 +863,40 @@
         </footer>`;
     }
 
+    function updateMeta(path) {
+      const article = resources.find(r => `/${r.slug}` === path);
+      const meta = article ? {
+        title: `${article.title} | NaniNavi`,
+        description: article.description
+      } : (pageMeta[path] || pageMeta['/']);
+
+      document.title = meta.title;
+
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute('href', `https://naninavi.com${path === '/' ? '/' : path}`);
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute('content', meta.description);
+
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', meta.title);
+
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) ogDescription.setAttribute('content', meta.description);
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', `https://naninavi.com${path === '/' ? '/' : path}`);
+
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twitterTitle) twitterTitle.setAttribute('content', meta.title);
+
+      const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+      if (twitterDescription) twitterDescription.setAttribute('content', meta.description);
+    }
+
     function render() {
       const path = location.pathname || '/';
-      document.title = 'NaniNavi | Senior driving support for caregivers';
+      updateMeta(path);
       if (routes[path]) {
         app.innerHTML = routes[path]() + footer();
       } else {
@@ -856,6 +927,7 @@
   </script>
 </body>
 </html>
+
 
 
 
