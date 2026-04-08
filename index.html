@@ -349,6 +349,15 @@
   <main id="app"></main>
 
   <script>
+    // Recover route after GitHub Pages 404 redirect
+    (function () {
+      const redirect = sessionStorage.getItem('redirect');
+      if (redirect) {
+        sessionStorage.removeItem('redirect');
+        history.replaceState(null, '', redirect);
+      }
+    })();
+
     const appStoreUrl = 'https://apps.apple.com/us/app/caregiver-navigator-naninavi/id6758022523';
     const supportEmail = 'support@naninavi.com';
     const assets = {
@@ -911,15 +920,20 @@
     document.addEventListener('click', (e) => {
       const toggle = document.getElementById('menuToggle');
       const mobileNav = document.getElementById('mobileNav');
+      const toggleClicked = e.target.closest('#menuToggle');
       const link = e.target.closest('a');
+
+      if (toggleClicked) {
+        e.preventDefault();
+        if (mobileNav) mobileNav.classList.toggle('open');
+        return;
+      }
+
       if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('/')) {
         e.preventDefault();
         history.pushState({}, '', link.getAttribute('href'));
         if (mobileNav) mobileNav.classList.remove('open');
         render();
-      }
-      if (toggle && e.target === toggle) {
-        mobileNav.classList.toggle('open');
       }
     });
 
@@ -927,6 +941,31 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
