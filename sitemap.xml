@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>https://naninavi.com/</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/how-it-works</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/for-caregivers</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/resources</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/support</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/privacy</loc>
+  </url>
+
+  <!-- Resource Articles -->
+  <url>
+    <loc>https://naninavi.com/when-should-an-elderly-parent-stop-driving</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/signs-it-is-no-longer-safe-for-seniors-to-drive</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/how-to-talk-to-your-parents-about-giving-up-driving</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/alternatives-to-driving-for-seniors</loc>
+  </url>
+  <url>
+    <loc>https://naninavi.com/how-to-track-when-a-loved-one-arrives-safely</loc>
+  </url>
+
+</urlset>
