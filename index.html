@@ -775,21 +775,116 @@
       `;
     }
 
-    function renderCaregivers() {
-      return `
-        <section class="hero"><div class="container title-block"><div class="eyebrow">For Caregivers</div><h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">Support independence without feeling completely in the dark</h1><p class="lead" style="margin-left:auto;margin-right:auto;">Families often want a middle ground between doing nothing and taking the keys away. NaniNavi is designed for that in-between stage where simplicity and reassurance matter most.</p></div></section>
-        <section class="page-follow" style="padding-top:0"><div class="container dual-grid"><div style="display:grid; gap:18px;">${[
-          ['Reduce uncertainty', 'Know when a trip begins and when your loved one arrives.'],
-          ['Support routine and familiarity', 'Preset common destinations so repeat trips feel easier and more consistent.'],
-          ['Create a simpler driving plan', 'Build a safer routine around the places your loved one actually goes.'],
-          ['Use it as part of a larger transition', 'NaniNavi can support the period when families are evaluating whether an older adult should keep driving.']
-        ].map(([t,d]) => `<div class="white-card"><h3 style="margin:0">${t}</h3><p>${d}</p></div>`).join('')}</div><div class="white-card"><h3 style="margin:0">Who this is for</h3><div style="display:grid; gap:14px; margin-top:18px;">${[
-          'Adult children helping aging parents with routine driving',
-          'Families concerned about confusion or safety during familiar trips',
-          'Caregivers who want visibility without constant check in calls',
-          'Family drivers helping transport an older adult to regular destinations'
-        ].map(item => `<div class="chip">✓ ${item}</div>`).join('')}</div></div></div></section>`;
-    }
+   function renderCaregivers() {
+  return `
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">For caregivers and families</div>
+          <h1>Know they arrived safely.</h1>
+          <p class="lead">
+            NaniNavi helps caregivers support seniors with simple navigation and optional arrival notifications for added peace of mind.
+          </p>
+          <div style="margin-top:18px; color:#516989; font-weight:700; font-size:1rem;">
+            Free to use. Premium notifications are optional.
+          </div>
+          <div class="cta-row">
+            <a href="${appStoreUrl}">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" style="height:54px;">
+            </a>
+            <a class="btn" href="/resources">View caregiver resources</a>
+          </div>
+        </div>
+
+        <div class="image-shell">
+          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; border-radius:32px;">
+            <source src="images/naninavi-hero.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div class="container trust-row">
+        <span>Simple for seniors</span><span>•</span>
+        <span>Helpful for caregivers</span><span>•</span>
+        <span>Built for peace of mind</span>
+      </div>
+    </section>
+
+    <section class="blue-section">
+      <div class="container">
+        <div class="title-block">
+          <div class="eyebrow">Caregiver peace of mind</div>
+          <h2>Support independence. Reduce anxiety.</h2>
+          <p>
+            Helping seniors stay independent can bring both freedom and worry. NaniNavi was designed to make everyday trips easier for seniors while helping caregivers feel more connected and reassured.
+          </p>
+        </div>
+
+        <div class="grid-4" style="grid-template-columns:repeat(3,1fr);">
+          <div class="white-card">
+            <h3 style="margin-top:0;">Simple for Seniors</h3>
+            <p>Large, easy-to-use destination buttons designed to reduce confusion and simplify navigation.</p>
+          </div>
+          <div class="white-card">
+            <h3 style="margin-top:0;">Helpful for Caregivers</h3>
+            <p>Optional notifications let caregivers know when trips begin or arrive safely.</p>
+          </div>
+          <div class="white-card">
+            <h3 style="margin-top:0;">Easy to Set Up</h3>
+            <p>Caregivers can create destinations remotely and share them instantly with the senior driver.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blue-section">
+      <div class="container">
+        <div class="title-block">
+          <div class="eyebrow">Everyday use cases</div>
+          <h2>How families use NaniNavi</h2>
+          <p>A practical tool for everyday moments when independence and reassurance both matter.</p>
+        </div>
+
+        <div class="dual-grid">
+          ${[
+            'Helping aging parents confidently navigate familiar destinations.',
+            'Supporting seniors who may struggle with traditional navigation apps.',
+            'Coordinating transportation between family members and caregivers.',
+            'Providing peace of mind during everyday trips, errands, and appointments.'
+          ].map(item => `<div class="white-card"><div class="chip">✓ ${item}</div></div>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <section class="blue-section">
+      <div class="container image-text">
+        <div>
+          <div class="eyebrow">Additional resources</div>
+          <h2>Caregiver guidance for senior driving decisions.</h2>
+          <p class="lead" style="font-size:1.08rem; max-width:none;">
+            Explore practical articles focused on helping seniors maintain independence while supporting caregivers and families.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="/resources">View caregiver resources</a>
+          </div>
+        </div>
+        <div class="white-card">
+          <h3 style="margin-top:0;">Peace of mind for everyday trips</h3>
+          <p>
+            NaniNavi helps seniors stay more independent while giving caregivers added confidence and reassurance.
+          </p>
+          <div class="cta-row">
+            <a href="${appStoreUrl}">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" style="height:54px;">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
 
     function renderResources() {
       return `
